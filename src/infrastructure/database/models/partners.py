@@ -1,7 +1,8 @@
 from src.infrastructure.database.models.base_model import BaseModel
+from src.infrastructure.database.models.products import Products
 
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import UUID
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.dialects.postgresql import UUID
 
 import uuid
 
@@ -10,7 +11,7 @@ class Partners(BaseModel):
     __tablename__ = "partners"
 
     id: Mapped[uuid.UUID] = mapped_column(
-        UUID(), primary_key=True, nullable=False, default=uuid.uuid4()
+        UUID(as_uuid=True), primary_key=True, nullable=False, default=uuid.uuid4(), unique=True
     )
 
     partner_type: Mapped[str] = mapped_column(nullable=False)
@@ -21,3 +22,5 @@ class Partners(BaseModel):
     ur_address: Mapped[str] = mapped_column(nullable=False)
     inn: Mapped[int] = mapped_column(nullable=False)
     rate: Mapped[float] = mapped_column(nullable=False)
+
+    products: Mapped[list[Products]] = relationship(back_populates="partner")

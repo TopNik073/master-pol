@@ -1,7 +1,8 @@
 from src.infrastructure.database.models.base_model import BaseModel
+from src.infrastructure.database.models.products_import import ProductsImport
 
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import UUID
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.dialects.postgresql import UUID
 
 import uuid
 
@@ -10,7 +11,10 @@ class ProductsTypes(BaseModel):
     __tablename__ = "products_types"
 
     id: Mapped[uuid.UUID] = mapped_column(
-        UUID(), primary_key=True, nullable=False, default=uuid.uuid4()
+        UUID(as_uuid=True), primary_key=True, nullable=False, default=uuid.uuid4(), unique=True
     )
+
     name: Mapped[str] = mapped_column(nullable=False)
     coefficient: Mapped[float] = mapped_column(nullable=False)
+
+    import_products: Mapped[list[ProductsImport]] = relationship(back_populates="product_type")
