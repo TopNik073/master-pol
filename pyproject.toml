@@ -1,0 +1,15 @@
+[project]
+name = "master-pol"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "aiosqlite>=0.21.0",
+    "alembic>=1.16.1",
+    "black>=25.1.0",
+    "fastapi>=0.115.12",
+    "pydantic-settings>=2.9.1",
+    "sqlalchemy>=2.0.41",
+    "uvicorn>=0.34.3",
+]
