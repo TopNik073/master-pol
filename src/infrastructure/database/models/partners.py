@@ -1,10 +1,13 @@
+from typing import TYPE_CHECKING
 from src.infrastructure.database.models.base_model import BaseModel
-from src.infrastructure.database.models.products import Products
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
 
 import uuid
+
+if TYPE_CHECKING:
+    from src.infrastructure.database.models.products import Products
 
 
 class Partners(BaseModel):
@@ -23,4 +26,4 @@ class Partners(BaseModel):
     inn: Mapped[int] = mapped_column(nullable=False)
     rate: Mapped[float] = mapped_column(nullable=False)
 
-    products: Mapped[list[Products]] = relationship(back_populates="partner")
+    products: Mapped[list["Products"]] = relationship(back_populates="partner")

@@ -1,11 +1,14 @@
+from typing import TYPE_CHECKING
 from src.infrastructure.database.models.base_model import BaseModel
-from src.infrastructure.database.models.products_types import ProductsTypes
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy import ForeignKey
 
 import uuid
+
+if TYPE_CHECKING:
+    from src.infrastructure.database.models.products_types import ProductsTypes
 
 
 class ProductsImport(BaseModel):
@@ -20,4 +23,4 @@ class ProductsImport(BaseModel):
     article: Mapped[str] = mapped_column(nullable=False)
     minimum_cost: Mapped[float] = mapped_column(nullable=False)
 
-    product_type: Mapped[ProductsTypes] = relationship(back_populates="import_products")
+    product_type: Mapped["ProductsTypes"] = relationship(back_populates="import_products")

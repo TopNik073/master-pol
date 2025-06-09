@@ -1,5 +1,5 @@
+from typing import TYPE_CHECKING
 from src.infrastructure.database.models.base_model import BaseModel
-from src.infrastructure.database.models.partners import Partners
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
@@ -7,6 +7,9 @@ from sqlalchemy import ForeignKey
 
 import datetime
 import uuid
+
+if TYPE_CHECKING:
+    from src.infrastructure.database.models.partners import Partners
 
 
 class Products(BaseModel):
@@ -21,4 +24,4 @@ class Products(BaseModel):
     quantity_products: Mapped[int] = mapped_column(nullable=False)
     sell_date: Mapped[datetime.datetime] = mapped_column(nullable=False)
 
-    partner: Mapped[Partners] = relationship(back_populates="products")
+    partner: Mapped["Partners"] = relationship(back_populates="products")
