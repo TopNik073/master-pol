@@ -14,7 +14,11 @@ class Partners(BaseModel):
     __tablename__ = "partners"
 
     id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, nullable=False, default=uuid.uuid4(), unique=True
+        UUID(as_uuid=True),
+        primary_key=True,
+        nullable=False,
+        default=uuid.uuid4(),
+        unique=True,
     )
 
     partner_type: Mapped[str] = mapped_column(nullable=False)

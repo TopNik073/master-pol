@@ -10,10 +10,10 @@ from sqlalchemy.orm import selectinload, joinedload, relationship
 class AbstractRepo(ABC):
     @abstractmethod
     async def get_by_filter(
-            self,
-            mode: Literal["one", "all"],
-            load_relationships: Optional[List[str]] = None,
-            **filters
+        self,
+        mode: Literal["one", "all"],
+        load_relationships: Optional[List[str]] = None,
+        **filters,
     ):
         """Get record by filters"""
         raise NotImplemented("This method isn't implemented yet")
@@ -40,10 +40,10 @@ class PostgresRepo(AbstractRepo):
         self._session = session
 
     async def get_by_filter(
-            self,
-            mode: Literal["one", "all"],
-            load_relationships: Optional[List[str]] = None,
-            **filters
+        self,
+        mode: Literal["one", "all"],
+        load_relationships: Optional[List[str]] = None,
+        **filters,
     ):
         query = select(self.model)
 
@@ -57,25 +57,18 @@ class PostgresRepo(AbstractRepo):
             query = query.where(getattr(self.model, k) == v)
 
         result = await self._session.execute(query)
+        result = result.scalars().unique().all()
+
+        if len(result) == 0:
+            return
 
         if mode == "one":
-            return result.scalar_one()
+            return result[0]
 
-        return result.scalars().unique().all()
+        return result
 
     async def create(self, **data):
-        relationship_data = {}
-        for key, value in data.items():
-            if hasattr(self.model, key) and isinstance(getattr(self.model, key).property, relationship):
-                relationship_data[key] = value
-                del data[key]
-
         model = self.model(**data)
-
-        # Set relationship data
-        for key, value in relationship_data.items():
-            setattr(model, key, value)
-
         self._session.add(model)
         await self._session.commit()
         await self._session.refresh(model)
@@ -83,19 +76,14 @@ class PostgresRepo(AbstractRepo):
         return model
 
     async def update(self, id: uuid.UUID, **data):
-        relationship_data = {}
-        for key, value in data.items():
-            if hasattr(self.model, key) and isinstance(getattr(self.model, key).property, relationship):
-                relationship_data[key] = value
-                del data[key]
-
-        query = update(self.model).where(self.model.id == id).values(**data).returning(self.model)
+        query = (
+            update(self.model)
+            .where(self.model.id == id)
+            .values(**data)
+            .returning(self.model)
+        )
         result = await self._session.execute(query)
         model = result.scalar_one()
-
-        # Update relationship data
-        for key, value in relationship_data.items():
-            setattr(model, key, value)
 
         await self._session.commit()
         await self._session.refresh(model)

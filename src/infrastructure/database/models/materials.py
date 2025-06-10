@@ -10,7 +10,11 @@ class Materials(BaseModel):
     __tablename__ = "materials"
 
     id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, nullable=False, default=uuid.uuid4(), unique=True
+        UUID(as_uuid=True),
+        primary_key=True,
+        nullable=False,
+        default=uuid.uuid4(),
+        unique=True,
     )
 
     name: Mapped[str] = mapped_column(nullable=False)

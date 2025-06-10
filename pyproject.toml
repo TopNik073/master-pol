@@ -7,11 +7,16 @@ requires-python = ">=3.9"
 dependencies = [
     "alembic>=1.16.1",
     "asyncpg>=0.30.0",
+    "bcrypt>=4.3.0",
     "black>=25.1.0",
     "fastapi>=0.115.12",
     "jinja2>=3.1.6",
     "psycopg2>=2.9.10",
+    "pycryptodome>=3.23.0",
     "pydantic-settings>=2.9.1",
+    "pydantic[email]>=2.11.5",
+    "python-jose>=3.5.0",
     "sqlalchemy>=2.0.41",
+    "structlog>=25.4.0",
     "uvicorn>=0.34.3",
 ]

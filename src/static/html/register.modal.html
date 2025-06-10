@@ -1,0 +1,41 @@
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Регистрация</h3>
+            <button class="modal-close" onclick="closeModal('registerModal')">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <form id="registerForm" class="modal-form">
+            <div class="form-group">
+                <label for="registerName">Имя</label>
+                <input type="text" id="registerName" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="registerEmail">Email</label>
+                <input type="email" id="registerEmail" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">Пароль</label>
+                <div class="password-input">
+                    <input type="password" id="registerPassword" name="password" required minlength="6">
+                    <button type="button" class="password-toggle" onclick="togglePassword('registerPassword', this)">
+                        <i data-lucide="eye" class="password-icon"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="registerPasswordVerify">Подтвердите пароль</label>
+                <div class="password-input">
+                    <input type="password" id="registerPasswordVerify" name="password" required minlength="6">
+                    <button type="button" class="password-toggle" onclick="togglePassword('registerPasswordVerify', this)">
+                        <i data-lucide="eye" class="password-icon"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="button button-primary button-lg w-full">
+                Зарегистрироваться
+            </button>
+        </form>
+    </div>
+</div>

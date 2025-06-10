@@ -1,0 +1,71 @@
+<!-- Header for non-authenticated users -->
+<header class="header" id="headerNonAuth">
+    <div class="header-container">
+        <div class="header-inner">
+            <!-- Logo -->
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <img src="{{ static('/images/master-pol.png') }}" alt="Master Pol Logo" style="width: 2rem; height: 2rem">
+                </div>
+                <div class="logo-text">
+                    <h1>Мастер Пол</h1>
+                    <p>Производство полов</p>
+                </div>
+            </div>
+
+            <!-- Auth Buttons -->
+            <div class="hidden sm:flex items-center space-x-3 auth-buttons">
+                <button class="button button-outline" onclick="openModal('loginModal')">
+                    Вход
+                </button>
+                <button class="button button-primary" onclick="openModal('registerModal')">
+                    Регистрация
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Header for authenticated users -->
+<header class="header" id="headerAuth" style="display: none;">
+    <div class="header-container">
+        <div class="header-inner">
+            <!-- Logo -->
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <img src="{{ static('/images/master-pol.png') }}" alt="Master Pol Logo" style="width: 2rem; height: 2rem">
+                </div>
+                <div class="logo-text">
+                    <h1>Мастер Пол</h1>
+                    <p>Производство полов</p>
+                </div>
+            </div>
+
+            <!-- Auth Menu -->
+            <div class="hidden sm:flex items-center space-x-3 auth-buttons">
+                <div class="user-menu">
+                    <div class="profile-dropdown">
+                        <button class="profile-button" onclick="toggleProfileMenu()">
+                            <i data-lucide="user" id="profileIcon"></i>
+                        </button>
+                        <div class="profile-menu" id="profileMenu">
+                            <a href="/profile" class="profile-menu-item">
+                                <i data-lucide="user"></i>
+                                Профиль
+                            </a>
+                            <a href="/admin" class="profile-menu-item admin-only" style="display: none;">
+                                <i data-lucide="settings"></i>
+                                Админ панель
+                            </a>
+                            <div class="profile-menu-divider"></div>
+                            <button class="profile-menu-item text-red" onclick="logout()">
+                                <i data-lucide="log-out"></i>
+                                Выйти
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header> 

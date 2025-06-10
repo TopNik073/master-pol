@@ -1,0 +1,28 @@
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Вход в систему</h3>
+            <button class="modal-close" onclick="closeModal('loginModal')">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <form id="loginForm" class="modal-form">
+            <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Пароль</label>
+                <div class="password-input">
+                    <input type="password" id="loginPassword" name="password" required minlength="6">
+                    <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', this)">
+                        <i data-lucide="eye" class="password-icon"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="button button-primary button-lg w-full">
+                Войти
+            </button>
+        </form>
+    </div>
+</div>
