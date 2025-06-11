@@ -9,6 +9,7 @@ import uuid
 
 if TYPE_CHECKING:
     from src.infrastructure.database.models.products_types import ProductsTypes
+    from src.infrastructure.database.models.products import Products
 
 
 class ProductsImport(BaseModel):
@@ -32,3 +33,4 @@ class ProductsImport(BaseModel):
     product_type: Mapped["ProductsTypes"] = relationship(
         back_populates="import_products"
     )
+    products: Mapped[list["Products"]] = relationship(back_populates="product_import")

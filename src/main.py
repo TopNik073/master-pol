@@ -10,7 +10,7 @@ from src.core.middleware import RequestLoggingMiddleware
 from src.core.logger import get_logger
 
 from src.presentation.front import front_router
-from src.api import api_router
+from src.presentation.api import api_router
 
 logger = get_logger(__name__)
 

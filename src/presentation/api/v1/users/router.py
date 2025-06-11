@@ -1,11 +1,11 @@
 from fastapi import APIRouter
 
-from src.api.v1.guards.jwt_guard import CURRENT_USER_DEP
+from src.presentation.api.v1.guards.jwt import CURRENT_USER_DEP
 
-from src.api.v1.schemas import SuccessResponseSchema, UserBase
+from src.presentation.api.v1.schemas import SuccessResponseSchema, UserBase
 
 
-users = APIRouter(prefix="/users", tags=["users"])
+users = APIRouter(prefix="/users", tags=["Users"])
 
 
 @users.get("/me")

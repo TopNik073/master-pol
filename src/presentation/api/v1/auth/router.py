@@ -1,16 +1,16 @@
 from fastapi import APIRouter
 
-from src.api.v1.schemas import SuccessResponseSchema
-from src.api.v1.auth.schemas import (
+from src.presentation.api.v1.schemas import SuccessResponseSchema
+from src.presentation.api.v1.auth.schemas import (
     RegisterRequestSchema,
     LoginRequestSchema,
     RefreshTokenRequest,
     AuthResponseSchema,
 )
 
-from src.api.v1.auth.dependencies import AUTH_SERVICE_DEP
+from src.presentation.api.v1.auth.dependencies import AUTH_SERVICE_DEP
 
-auth = APIRouter(prefix="/auth", tags=["auth"])
+auth = APIRouter(prefix="/auth", tags=["Auth"])
 
 
 @auth.post("/register", response_model=SuccessResponseSchema[AuthResponseSchema])

@@ -1,10 +1,14 @@
-from typing import Literal, Optional, List, Type
+from typing import Literal, TypeVar, Generic
 import uuid
 from abc import ABC, abstractmethod
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update, delete
-from sqlalchemy.orm import selectinload, joinedload, relationship
+from sqlalchemy import select, update, delete, func, or_, asc, desc, String, Text
+from sqlalchemy.orm import selectinload, joinedload, InstrumentedAttribute
+
+from src.infrastructure.database.models import BaseModel
+
+MODEL_T = TypeVar("MODEL_T", bound=BaseModel)
 
 
 class AbstractRepo(ABC):
@@ -12,10 +16,23 @@ class AbstractRepo(ABC):
     async def get_by_filter(
         self,
         mode: Literal["one", "all"],
-        load_relationships: Optional[List[str]] = None,
+        load_relationships: list[str] | None = None,
         **filters,
     ):
         """Get record by filters"""
+        raise NotImplemented("This method isn't implemented yet")
+
+    @abstractmethod
+    async def get_paginated(
+        self,
+        page: int,
+        per_page: int,
+        search_query: str | None = None,
+        order_by: str | None = None,
+        order_direction: Literal["asc", "desc"] = "asc",
+        include: list[str] | None = None,
+    ):
+        """Get paginated records with search, order and relationships"""
         raise NotImplemented("This method isn't implemented yet")
 
     @abstractmethod
@@ -35,14 +52,14 @@ class AbstractRepo(ABC):
 
 
 class PostgresRepo(AbstractRepo):
-    def __init__(self, model: Type, session: AsyncSession):
+    def __init__(self, model: MODEL_T, session: AsyncSession):
         self.model = model
         self._session = session
 
     async def get_by_filter(
         self,
         mode: Literal["one", "all"],
-        load_relationships: Optional[List[str]] = None,
+        load_relationships: list[str] | None = None,
         **filters,
     ):
         query = select(self.model)
@@ -66,6 +83,54 @@ class PostgresRepo(AbstractRepo):
             return result[0]
 
         return result
+
+    async def get_paginated(
+        self,
+        page: int,
+        per_page: int,
+        search_query: str | None = None,
+        order_by: str | None = None,
+        order_direction: Literal["asc", "desc"] = "asc",
+        include: list[str] | None = None,
+    ) -> tuple[list[MODEL_T], int]:
+        stmt = select(self.model)
+
+        if include:
+            for relation in include:
+                if hasattr(self.model, relation):
+                    stmt = stmt.options(joinedload(getattr(self.model, relation)))
+
+        if search_query:
+            search_conditions = []
+            for column in self.model.__table__.columns:
+                if isinstance(column.type, (String, Text)):
+                    search_conditions.append(column.ilike(f"%{search_query}%"))
+            if search_conditions:
+                stmt = stmt.where(or_(*search_conditions))
+
+        if order_by:
+            column = getattr(self.model, order_by, None)
+            if column is not None and isinstance(column, InstrumentedAttribute):
+                stmt = stmt.order_by(
+                    desc(column) if order_direction == "desc" else asc(column)
+                )
+
+        # Apply pagination
+        stmt = stmt.limit(per_page).offset((page - 1) * per_page)
+
+        # Get items
+        result = await self._session.execute(stmt)
+        items = result.unique().scalars().all()
+
+        # Get total count
+        count_stmt = select(func.count()).select_from(self.model)
+        if search_query and search_conditions:
+            count_stmt = count_stmt.where(or_(*search_conditions))
+
+        total_result = await self._session.execute(count_stmt)
+        total = total_result.scalar_one()
+
+        return items, total
 
     async def create(self, **data):
         model = self.model(**data)

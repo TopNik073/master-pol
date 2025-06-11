@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 from src.infrastructure.database.models.base_model import BaseModel
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID, BIGINT
 
 import uuid
 
@@ -27,7 +27,7 @@ class Partners(BaseModel):
     email: Mapped[str] = mapped_column(nullable=False)
     phone_number: Mapped[str] = mapped_column(nullable=False)
     ur_address: Mapped[str] = mapped_column(nullable=False)
-    inn: Mapped[int] = mapped_column(nullable=False)
+    inn: Mapped[int] = mapped_column(BIGINT, nullable=False)
     rate: Mapped[float] = mapped_column(nullable=False)
 
     products: Mapped[list["Products"]] = relationship(back_populates="partner")

@@ -7,7 +7,7 @@ from src.infrastructure.database.models import Users
 from src.infrastructure.database.enums.roles import Roles
 from src.infrastructure.security.jwt import JWTHandler
 
-from src.api.v1.auth.schemas import (
+from src.presentation.api.v1.auth.schemas import (
     RegisterRequestSchema,
     LoginRequestSchema,
     AuthResponseSchema,

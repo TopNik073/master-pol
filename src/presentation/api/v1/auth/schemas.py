@@ -2,7 +2,7 @@ from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
 from src.infrastructure.database.enums.roles import Roles
 
-from src.api.v1.schemas import UserBase
+from src.presentation.api.v1.schemas import UserBase
 
 
 class AuthRequestSchema(BaseModel):
