@@ -2,6 +2,9 @@ from typing import TypeVar, Generic
 from pydantic import BaseModel, Field, EmailStr
 import uuid
 
+from datetime import datetime
+
+from src.infrastructure.database.enums.partner_statuses import PartnerStatuses
 from src.infrastructure.database.enums.roles import Roles
 
 T = TypeVar("T")
@@ -36,8 +39,19 @@ class PartnerBase(BaseModel):
     director: str
     phone_number: str
     inn: int
-    rate: int
-    discount: float
+    rate: float
+    status: PartnerStatuses
+
+
+class PartnerBidBase(BaseModel):
+    id: uuid.UUID
+    partner_type: str
+    name: str
+    email: EmailStr
+    ur_address: str
+    director: str
+    phone_number: str
+    inn: int
 
 
 class ProductsTypesBase(BaseModel):
@@ -53,6 +67,22 @@ class ProductsImportBase(BaseModel):
     article: str
     minimum_cost: float
     product_type: ProductsTypesBase
+
+
+class ProductsBase(BaseModel):
+    id: uuid.UUID
+    quantity_products: int
+    sell_date: datetime
+
+
+class ProductsExtendedSchema(ProductsBase):
+    partner: PartnerBase
+    product_import: ProductsImportBase
+
+
+class PartnersProductsExtendedSchema(PartnerBase):
+    products: list[ProductsExtendedSchema]
+    discount: float
 
 
 class PaginationMetadata(BaseModel):

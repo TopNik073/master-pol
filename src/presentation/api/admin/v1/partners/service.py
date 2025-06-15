@@ -5,19 +5,6 @@ from src.infrastructure.database.models import Partners
 
 
 class AdminPartnersService(BaseAdminService):
-    async def get_paginated(
-        self,
-        page: int,
-        per_page: int,
-        search_query: str | None = None,
-        order_by: str | None = None,
-        order_direction: Literal["asc", "desc"] = "asc",
-    ) -> tuple[list[Partners], int]:
-        partners, total = await self._repo.get_paginated(
-            page, per_page, search_query, order_by, order_direction, ["products"]
-        )
-        self.calculate_discount(partners)
-        return partners, total
 
     @staticmethod
     def calculate_discount(partners: list[Partners]):
@@ -39,3 +26,22 @@ class AdminPartnersService(BaseAdminService):
                 discount = 0.15
 
             partner.discount = discount
+
+    async def get_paginated(
+        self,
+        page: int,
+        per_page: int,
+        search_query: str | None = None,
+        order_by: str | None = None,
+        order_direction: Literal["asc", "desc"] = "asc",
+    ) -> tuple[list[Partners], int]:
+        partners, total = await self._repo.get_paginated(
+            page,
+            per_page,
+            search_query,
+            order_by,
+            order_direction,
+            ["products", "products.product_import", "products.product_import.product_type"],
+        )
+        self.calculate_discount(partners)
+        return partners, total

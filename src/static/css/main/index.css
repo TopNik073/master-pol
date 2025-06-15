@@ -1,3 +1,92 @@
+/* Profile Dropdown */
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 2px solid var(--gray-light);
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.profile-button:hover {
+    border-color: var(--gray);
+}
+
+.profile-button svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--gray);
+}
+
+.profile-button.admin svg {
+    color: var(--green);
+}
+
+.profile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    min-width: 12rem;
+    display: none;
+    z-index: 50;
+}
+
+.profile-menu.active {
+    display: block;
+}
+
+.profile-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: var(--black);
+    text-decoration: none;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: none;
+    font-size: 0.875rem;
+}
+
+.profile-menu-item:hover {
+    background-color: var(--gray-lighter);
+}
+
+.profile-menu-item svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--gray);
+}
+
+.profile-menu-item.text-red {
+    color: #ef4444;
+}
+
+.profile-menu-item.text-red svg {
+    color: #ef4444;
+}
+
+.profile-menu-divider {
+    height: 1px;
+    background-color: var(--gray-light);
+    margin: 0.5rem 0;
+}
+
 .hero {
     padding: 5rem 1rem;
     text-align: center;

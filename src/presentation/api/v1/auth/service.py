@@ -37,6 +37,19 @@ class AuthService:
             ),
         )
 
+    @staticmethod
+    def hash_password(password: str) -> str:
+        return bcrypt.hashpw(password.encode(UTF_8_ENCODING), bcrypt.gensalt()).decode(
+            UTF_8_ENCODING
+        )
+
+    @staticmethod
+    def validate_password(password: str, req_password: str) -> bool:
+        return bcrypt.checkpw(
+            password.encode(UTF_8_ENCODING),
+            req_password.encode(UTF_8_ENCODING),
+        )
+
     async def register(self, user: RegisterRequestSchema) -> AuthResponseSchema | None:
         if await self.user_repo.get_by_filter("one", email=user.email):
             raise HTTPException(status_code=400, detail="User already exists")
@@ -45,9 +58,7 @@ class AuthService:
             email=user.email,
             name=user.name,
             role=Roles.user,
-            password=bcrypt.hashpw(
-                user.password.encode(UTF_8_ENCODING), bcrypt.gensalt()
-            ).decode(UTF_8_ENCODING),
+            password=self.hash_password(user.password),
         )
 
         users_res = await self.user_repo.create(**user_obj.dump_to_dict())
@@ -56,10 +67,7 @@ class AuthService:
     async def login(self, user: LoginRequestSchema) -> AuthResponseSchema | None:
         res: Users = await self.user_repo.get_by_filter("one", email=user.email)
         if res:
-            if bcrypt.checkpw(
-                user.password.encode(UTF_8_ENCODING),
-                res.password.encode(UTF_8_ENCODING),
-            ):
+            if self.validate_password(user.password, res.password):
                 return self.create_auth__response(res)
 
         raise HTTPException(status_code=401, detail="Invalid credentials")

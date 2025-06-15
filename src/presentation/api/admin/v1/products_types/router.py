@@ -27,9 +27,7 @@ async def get_products_types(
     prod_types, total = await service.get_paginated(**pagination.dump_to_dict())
     return SuccessResponseSchema[AdminProductsTypesPaginatedResponseSchema](
         data=AdminProductsTypesPaginatedResponseSchema(
-            products_types=[
-                ProductsTypesBase(**prod_type.dump_to_dict()) for prod_type in prod_types
-            ],
+            items=[ProductsTypesBase(**prod_type.dump_to_dict()) for prod_type in prod_types],
             meta=PaginationMetadata(
                 total=total, page=pagination.page, per_page=pagination.per_page
             ),
@@ -64,20 +62,21 @@ async def create_product_type(
     )
 
 
-@admin_product_types.put("/")
+@admin_product_types.put("/{id}")
 async def update_product_type(
     service: ADMIN_PRODUCTS_TYPES_SERVICE_DEP,
     _current_user: CURRENT_ADMIN_USER_DEP,
     prod_type: AdminControlProductsTypesRequestSchema,
+    id: uuid.UUID,
 ) -> SuccessResponseSchema[ProductsTypesBase]:
-    prod_type = await service.update(prod_type)
+    prod_type = await service.update(id, prod_type)
     return SuccessResponseSchema[ProductsTypesBase](
         data=ProductsTypesBase(**prod_type.dump_to_dict()),
         message="Product Type updated successfully",
     )
 
 
-@admin_product_types.delete("/")
+@admin_product_types.delete("/{id}")
 async def delete_product_type(
     service: ADMIN_PRODUCTS_TYPES_SERVICE_DEP,
     _current_user: CURRENT_ADMIN_USER_DEP,

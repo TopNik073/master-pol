@@ -1,0 +1,43 @@
+<div id="partnerModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Стать партнёром</h3>
+            <button class="modal-close" onclick="closeModal('partnerModal')">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <form id="partnerForm" class="modal-form">
+            <div class="form-group">
+                <label for="partnerType">Тип организации</label>
+                <input type="text" id="partnerType" name="partner_type" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Название организации</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="name">ИНН</label>
+                <input type="number" id="inn" name="inn" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Контактный e-mail</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="urAddress">Юридический адрес</label>
+                <input type="text" id="urAddress" name="ur_address" required>
+            </div>
+            <div class="form-group">
+                <label for="director">ФИО директора</label>
+                <input type="text" id="director" name="director" required>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Номер телефона</label>
+                <input type="tel" id="phoneNumber" name="phone_number" required>
+            </div>
+            <button type="submit" class="button button-primary button-lg w-full">
+                Отправить заявку
+            </button>
+        </form>
+    </div>
+</div>

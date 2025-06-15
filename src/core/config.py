@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import PostgresDsn, SecretStr
+from pydantic import PostgresDsn, SecretStr, EmailStr, Field
 
 from pathlib import Path
 
@@ -13,6 +13,10 @@ class Config(BaseSettings):
     APP_HOST: str = "localhost"
     APP_PORT: int = 8000
     DEBUG: bool = False
+
+    ADMIN_EMAIL: EmailStr
+    ADMIN_PASSWORD: str = Field(..., min_length=8)
+    ADMIN_NAME: str = "admin"
 
     DB_HOST: str
     DB_PORT: str

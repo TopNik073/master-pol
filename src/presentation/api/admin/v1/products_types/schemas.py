@@ -4,7 +4,7 @@ from src.presentation.api.v1.schemas import ProductsTypesBase, PaginationMetadat
 
 
 class AdminProductsTypesPaginatedResponseSchema(BaseModel):
-    products_types: list[ProductsTypesBase]
+    items: list[ProductsTypesBase]
     meta: PaginationMetadata
 
 

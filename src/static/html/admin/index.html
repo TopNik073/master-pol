@@ -1,0 +1,24 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+    <div class="dashboard-container">
+        <h1 class="page-title">Панель управления</h1>
+
+        {% include "admin/components/stats.html" %}
+
+        <div class="row g-4 flex-grow-1">
+            <div class="col-md-8 h-100">
+                {% include "admin/components/sales-chart.html" %}
+            </div>
+            <div class="col-md-4 h-100">
+                {% include "admin/components/recent-sales.html" %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="{{ static('/js/admin/api.js') }}"></script>
+    <script type="module" src="{{ static('/js/admin/dashboard.js') }}"></script>
+{% endblock %} 

@@ -14,7 +14,7 @@ class Users(BaseModel):
         UUID(as_uuid=True),
         primary_key=True,
         nullable=False,
-        default=uuid.uuid4(),
+        default=uuid.uuid4,
         unique=True,
     )
 

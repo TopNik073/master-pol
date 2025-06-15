@@ -1,0 +1,24 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+    <h1 class="page-title">{% block page_title %}{% endblock %}</h1>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="input-group" style="max-width: 600px;">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+            <input type="text" class="form-control focus-green" id="searchInput" placeholder="Поиск...">
+        </div>
+        {% block add_button %}{% endblock %}
+    </div>
+
+    <div id="tableContainer"></div>
+
+    {% block extra_modals %}{% endblock %}
+{% endblock %}
+
+{% block extra_js %}
+    {{ super() }}
+    <script type="module" src="{{ static('/js/admin/components/TableComponent.js') }}"></script>
+    <script type="module" src="{{ static('/js/admin/components/EntityModal.js') }}"></script>
+    {% block page_specific_js %}{% endblock %}
+{% endblock %} 

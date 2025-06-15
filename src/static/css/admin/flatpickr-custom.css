@@ -1,0 +1,131 @@
+.flatpickr-calendar {
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 3px 13px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--gray-light);
+}
+
+.flatpickr-calendar.arrowBottom:after {
+    border-top-color: var(--green);
+}
+
+.flatpickr-day {
+    border-radius: 4px;
+    margin: 2px;
+    color: var(--black);
+}
+
+.flatpickr-day.selected {
+    background: var(--green) !important;
+    border-color: var(--green) !important;
+}
+
+.flatpickr-day:hover {
+    background: var(--gray-lighter);
+}
+
+.flatpickr-day.today {
+    border-color: var(--green);
+}
+
+.flatpickr-months .flatpickr-month {
+    background: var(--green);
+    color: var(--white);
+    border-radius: 8px 8px 0 0;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    color: var(--white);
+    background-color: var(--green);
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
+    color: var(--white);
+    background-color: var(--green);
+}
+
+.flatpickr-weekdays {
+    color: var(--white);
+    background-color: var(--green);
+}
+
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+    color: var(--white);
+    fill: var(--white);
+}
+
+.flatpickr-months .flatpickr-prev-month:hover,
+.flatpickr-months .flatpickr-next-month:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.flatpickr-time {
+    border-top: 1px solid var(--gray-light);
+}
+
+.flatpickr-time input {
+    color: var(--black);
+}
+
+.flatpickr-time input:hover {
+    background: var(--gray-lighter);
+}
+
+.flatpickr-time input.flatpickr-hour {
+    font-weight: bold;
+}
+
+/* Стили для кнопок времени */
+.flatpickr-time .flatpickr-am-pm,
+.flatpickr-time .flatpickr-time-separator {
+    color: var(--black);
+}
+
+/* Стили для выбранного времени */
+.flatpickr-time input.flatpickr-hour.selected,
+.flatpickr-time input.flatpickr-minute.selected {
+    background: var(--green);
+    color: var(--white);
+}
+
+/* Стили для отключенных дней */
+.flatpickr-day.disabled,
+.flatpickr-day.disabled:hover {
+    color: var(--gray-light);
+    background: var(--gray-lighter);
+    cursor: not-allowed;
+}
+
+.flatpickr-weekdays .flatpickr-weekdaycontainer {
+    color: var(--white);
+    background-color: var(--green);
+}
+
+span.flatpickr-weekday {
+    color: var(--white);
+    background-color: var(--green);
+}
+
+/* Стили для недель */
+.flatpickr-weekday {
+    color: var(--gray);
+    font-weight: 500;
+    color: var(--white);
+    background: var(--green);
+}
+
+/* Стили для инпута */
+.flatpickr-input {
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: var(--black);
+}
+
+.flatpickr-input:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 2px rgba(103, 186, 128, 0.25);
+    outline: none;
+} 

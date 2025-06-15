@@ -1,6 +1,8 @@
 from typing import TYPE_CHECKING
 from src.infrastructure.database.models.base_model import BaseModel
 
+from src.infrastructure.database.enums.partner_statuses import PartnerStatuses
+
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID, BIGINT
 
@@ -17,9 +19,11 @@ class Partners(BaseModel):
         UUID(as_uuid=True),
         primary_key=True,
         nullable=False,
-        default=uuid.uuid4(),
+        default=uuid.uuid4,
         unique=True,
     )
+
+    status: Mapped[PartnerStatuses] = mapped_column(nullable=False, default=PartnerStatuses.pending)
 
     partner_type: Mapped[str] = mapped_column(nullable=False)
     name: Mapped[str] = mapped_column(nullable=False)

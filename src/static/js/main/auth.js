@@ -20,7 +20,7 @@ async function register(name, email, password) {
             name, 
             email, 
             password,
-            role: 'user' // Default role
+            role: 'user'
         });
         
         // Save tokens to localStorage

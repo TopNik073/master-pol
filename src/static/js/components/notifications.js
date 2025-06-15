@@ -29,7 +29,7 @@ function showNotification(message, type = 'info', duration = 5000) {
             <p class="notification-message">${message}</p>
         </div>
         <button class="notification-close" onclick="removeNotification(this.parentElement)">
-            <i data-lucide="x"></i>
+            <i data-lucide="x" style="display: block; width: 20px; height: 20px;"></i>
         </button>
     `;
 

@@ -5,7 +5,7 @@ from src.presentation.api.v1.schemas import PaginationMetadata, ProductsImportBa
 
 
 class AdminProductsImportPaginatedResponseSchema(BaseModel):
-    products_import: list[ProductsImportBase]
+    items: list[ProductsImportBase]
     meta: PaginationMetadata
 
 

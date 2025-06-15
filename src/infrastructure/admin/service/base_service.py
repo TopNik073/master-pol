@@ -30,16 +30,16 @@ class BaseAdminService(AbstractAdminService):
         )
 
     async def get(self, id: uuid.UUID) -> BASE_MODEL_T:
-        return await self._repo.get_filter_by(id=id)
+        return await self._repo.get_by_filter("one", id=id)
 
     async def create(self, data: PYDANTIC_MODEL_T) -> BASE_MODEL_T:
         return await self._repo.create(**data.model_dump())
 
-    async def update(self, data: PYDANTIC_MODEL_T) -> BASE_MODEL_T:
-        return await self._repo.update(**data.model_dump())
+    async def update(self, id: uuid.UUID, data: PYDANTIC_MODEL_T) -> BASE_MODEL_T:
+        return await self._repo.update(id, **data.model_dump())
 
     async def delete(self, id: uuid.UUID) -> uuid.UUID:
-        if self._repo.delete(id):
+        if await self._repo.delete(id):
             return id
 
         raise HTTPException(418, "Can't delete this entity")

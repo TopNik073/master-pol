@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Панель управления - Мастер Пол{% endblock %}</title>
+    <link href="{{ static('/icons/master-pol.ico') }}" rel="icon" type="image/x-icon">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ static('/css/admin/admin.css') }}">
+    <link rel="stylesheet" href="{{ static('/css/components/table.css') }}">
+    <link rel="stylesheet" href="{{ static('/css/components/notifications.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/components/buttons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/components/notifications.css') }}">
+    <link rel="stylesheet" href="{{ static('/css/admin/flatpickr-custom.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="admin-layout">
+        {% include "admin/components/sidebar.html" %}
+        
+        <main class="admin-main">
+            <div class="container-fluid">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <div id="notifications" class="notifications"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ static('/js/components/notifications.js') }}"></script>
+    <script src="{{ static('/js/admin/auth.js') }}"></script>
+    <script src="{{ static('/js/admin/sidebar.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

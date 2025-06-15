@@ -1,3 +1,10 @@
+:root {
+    --black: #1e293b;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --gray: #64748b;
+}
+
 .notifications {
     position: fixed;
     bottom: 20px;
@@ -35,6 +42,7 @@
 
 .notification-content {
     flex: 1;
+    justify-content: center;
 }
 
 .notification-title {
@@ -45,6 +53,8 @@
 .notification-message {
     color: var(--black);
     font-size: 0.9em;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .notification-close {

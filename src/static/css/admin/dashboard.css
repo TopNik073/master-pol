@@ -1,0 +1,48 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px); /* Adjust based on your header height */
+    padding: 1.5rem;
+}
+
+.dashboard-container .row {
+    min-height: 0;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+}
+
+.card-body {
+    overflow: hidden;
+}
+
+#salesChart {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.recent-sales {
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.recent-sales::-webkit-scrollbar {
+    width: 6px;
+}
+
+.recent-sales::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.recent-sales::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.recent-sales::-webkit-scrollbar-thumb:hover {
+    background: #555;
+} 

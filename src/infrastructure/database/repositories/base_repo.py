@@ -1,10 +1,10 @@
-from typing import Literal, TypeVar, Generic
+from typing import Literal, TypeVar, Any
 import uuid
 from abc import ABC, abstractmethod
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update, delete, func, or_, asc, desc, String, Text
-from sqlalchemy.orm import selectinload, joinedload, InstrumentedAttribute
+from sqlalchemy import select, update, delete, func, or_, asc, desc, String, Text, text
+from sqlalchemy.orm import joinedload, InstrumentedAttribute
 
 from src.infrastructure.database.models import BaseModel
 
@@ -50,6 +50,25 @@ class AbstractRepo(ABC):
         """Delete a record (hard)"""
         raise NotImplemented("This method isn't implemented yet")
 
+    @staticmethod
+    @abstractmethod
+    async def execute_sql_script(
+        session: AsyncSession, sql_script: str, commit: bool = True
+    ) -> Any:
+        """
+        Execute raw SQL script and return results.
+
+        Args:
+            session (AsyncSession): session for executing
+            sql_script (str): SQL script to execute
+            commit (bool): Whether to commit the transaction. Defaults to True.
+
+        Returns:
+            Any: Query results. For SELECT queries returns list of dicts,
+                 for other queries returns execution result.
+        """
+        raise NotImplemented("This method isn't implemented yet")
+
 
 class PostgresRepo(AbstractRepo):
     def __init__(self, model: MODEL_T, session: AsyncSession):
@@ -67,7 +86,7 @@ class PostgresRepo(AbstractRepo):
         # Add relationship loading if specified
         if load_relationships:
             for relationship in load_relationships:
-                query = query.options(selectinload(getattr(self.model, relationship)))
+                query = query.options(joinedload(getattr(self.model, relationship)))
 
         # Add filters
         for k, v in filters.items():
@@ -104,16 +123,25 @@ class PostgresRepo(AbstractRepo):
             search_conditions = []
             for column in self.model.__table__.columns:
                 if isinstance(column.type, (String, Text)):
-                    search_conditions.append(column.ilike(f"%{search_query}%"))
+                    if hasattr(column.type, "enums"):
+                        try:
+                            enum_values = [
+                                e for e in column.type.enums if search_query.lower() in e.lower()
+                            ]
+                            if enum_values:
+                                search_conditions.append(column.in_(enum_values))
+                        except:
+                            continue
+                    else:
+                        search_conditions.append(column.ilike(f"%{search_query}%"))
+
             if search_conditions:
                 stmt = stmt.where(or_(*search_conditions))
 
         if order_by:
             column = getattr(self.model, order_by, None)
             if column is not None and isinstance(column, InstrumentedAttribute):
-                stmt = stmt.order_by(
-                    desc(column) if order_direction == "desc" else asc(column)
-                )
+                stmt = stmt.order_by(desc(column) if order_direction == "desc" else asc(column))
 
         # Apply pagination
         stmt = stmt.limit(per_page).offset((page - 1) * per_page)
@@ -141,12 +169,7 @@ class PostgresRepo(AbstractRepo):
         return model
 
     async def update(self, id: uuid.UUID, **data):
-        query = (
-            update(self.model)
-            .where(self.model.id == id)
-            .values(**data)
-            .returning(self.model)
-        )
+        query = update(self.model).where(self.model.id == id).values(**data).returning(self.model)
         result = await self._session.execute(query)
         model = result.scalar_one()
 
@@ -159,3 +182,29 @@ class PostgresRepo(AbstractRepo):
         result = await self._session.execute(query)
         await self._session.commit()
         return result.rowcount > 0
+
+    @staticmethod
+    async def execute_sql_script(
+        session: AsyncSession, sql_script: str, commit: bool = False
+    ) -> Any:
+        """
+        Execute raw SQL script and return results.
+
+        Args:
+            session (AsyncSession): session for executing
+            sql_script (str): SQL script to execute
+            commit (bool): Whether to commit the transaction. Defaults to True.
+
+        Returns:
+            Any: Query results. For SELECT queries returns list of dicts,
+                 for other queries returns execution result.
+        """
+        result = await session.execute(text(sql_script))
+
+        if commit:
+            await session.commit()
+
+        if sql_script.strip().upper().startswith("SELECT"):
+            return [dict(row) for row in result]
+
+        return result

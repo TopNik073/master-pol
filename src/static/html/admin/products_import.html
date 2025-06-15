@@ -1,0 +1,15 @@
+{% extends "admin/entity_page_base.html" %}
+
+{% block page_title %}
+    Продукты
+{% endblock %}
+
+{% block add_button %}
+    <button class="button button-primary button-icon" id="addEntityBtn">
+        <i class="fas fa-plus"></i>Добавить продукт
+    </button>
+{% endblock %}
+
+{% block page_specific_js %}
+    <script type="module" src="{{ static('/js/admin/pages/products_import.js') }}"></script>
+{% endblock %} 

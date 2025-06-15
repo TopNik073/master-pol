@@ -13,7 +13,7 @@ from src.presentation.api.v1.schemas import (
 )
 from src.presentation.api.admin.v1.users.schemas import (
     AdminUsersPaginatedResponseSchema,
-    RegisterRequestSchema,
+    AdminUsersControlRequestSchema,
 )
 
 admin_users = APIRouter(prefix="/users", tags=["Users Admin"])
@@ -28,7 +28,7 @@ async def get_users(
     users, total = await service.get_paginated(**pagination.dump_to_dict())
     return SuccessResponseSchema[AdminUsersPaginatedResponseSchema](
         data=AdminUsersPaginatedResponseSchema(
-            users=[UserBase(**user.dump_to_dict()) for user in users],
+            items=[UserBase(**user.dump_to_dict()) for user in users],
             meta=PaginationMetadata(
                 total=total,
                 page=pagination.page,
@@ -55,7 +55,7 @@ async def get_user_by_id(
 async def create_user(
     service: ADMIN_USER_SERVICE_DEP,
     _current_user: CURRENT_ADMIN_USER_DEP,
-    user: RegisterRequestSchema,
+    user: AdminUsersControlRequestSchema,
 ) -> SuccessResponseSchema[UserBase]:
     user = await service.create(user)
     return SuccessResponseSchema[UserBase](
@@ -63,19 +63,20 @@ async def create_user(
     )
 
 
-@admin_users.put("/")
+@admin_users.put("/{id}")
 async def update_user(
     service: ADMIN_USER_SERVICE_DEP,
     _current_user: CURRENT_ADMIN_USER_DEP,
-    user: UserBase,
+    user: AdminUsersControlRequestSchema,
+    id: uuid.UUID,
 ) -> SuccessResponseSchema[UserBase]:
-    user = await service.update(user)
+    user = await service.update(id, user)
     return SuccessResponseSchema[UserBase](
         data=UserBase(**user.dump_to_dict()), message="User updated successfully"
     )
 
 
-@admin_users.delete("/")
+@admin_users.delete("/{id}")
 async def delete_user(
     service: ADMIN_USER_SERVICE_DEP,
     _current_user: CURRENT_ADMIN_USER_DEP,

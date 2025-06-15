@@ -1,0 +1,38 @@
+/* Стили для модального окна подтверждения */
+#confirmModal .modal-content {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  #confirmModal .modal-header {
+    padding: 1.5rem 1.5rem 0;
+  }
+  
+  #confirmModal .modal-body {
+    padding: 0 1.5rem 1.5rem;
+  }
+  
+  #confirmModal .modal-footer {
+    padding: 0 1.5rem 1.5rem;
+  }
+  
+  #confirmModal .btn-danger {
+    background-color: #ff6b6b;
+    border-color: #ff6b6b;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  
+  #confirmModal .btn-danger:hover {
+    background-color: #ff5252;
+    border-color: #ff5252;
+    transform: translateY(-1px);
+  }
+  
+  #confirmModal .btn-secondary {
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }

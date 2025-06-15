@@ -1,0 +1,121 @@
+:root {
+    --green: #67ba80;
+    --green-dark: #5aa873;
+    --beige: #f4e8d3;
+    --beige-dark: #e8dcc7;
+    --text-dark: #3a4a3f;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    padding: 0.625rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9375rem;
+    border: none;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-text {
+    display: inline;
+}
+
+@media (max-width: 576px) {
+    .btn-text {
+        display: none;
+    }
+    
+    .btn-sm {
+        padding: 0.375rem;
+        min-width: 32px;
+    }
+    
+    .fas {
+        margin-right: 0;
+    }
+}
+
+/* Основная зеленая кнопка */
+.button-primary {
+    background: linear-gradient(135deg, var(--green), var(--green-dark));
+    color: white;
+    border: 1px solid var(--green-dark);
+}
+
+.button-primary:hover {
+    background: linear-gradient(135deg, var(--green-dark), var(--green));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.button-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Бежевая вторичная кнопка */
+.button-secondary {
+    background: var(--beige);
+    color: var(--text-dark);
+    border: 1px solid var(--beige-dark);
+}
+
+.button-secondary:hover {
+    background: var(--beige-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Кнопка с иконкой */
+.button-icon {
+    padding: 0.625rem 1rem 0.625rem 0.875rem;
+}
+
+.button-icon i {
+    margin-right: 0.5rem;
+    font-size: 0.9em;
+}
+
+/* Эффект при нажатии */
+.button:active {
+    transition: all 0.1s ease;
+}
+
+/* Анимация при наведении */
+.button-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.button-primary:hover::after {
+    transform: translateX(0);
+}
+
+.button-outline {
+    background-color: transparent;
+    border: 1px solid var(--gray-light);
+    color: var(--black);
+}
+
+.button-outline:hover {
+    background-color: var(--beige);
+}
+
+.button-lg {
+    padding: 0.75rem 2rem;
+    font-size: 1.125rem;
+}

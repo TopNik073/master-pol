@@ -12,14 +12,19 @@ from src.core.logger import get_logger
 from src.presentation.front import front_router
 from src.presentation.api import api_router
 
+from src.utils import create_admin
+
 logger = get_logger(__name__)
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:  # noqa: ARG001
+async def lifespan(
+    _app: FastAPI,
+) -> AsyncGenerator[None, None]:  # noqa: ARG001
     base_url: str = f"http://{config.APP_HOST}:{config.APP_PORT}"
     logger.info(f"App started on {base_url}")
     logger.info(f"See Swagger for mode info: {base_url}/docs")
+    await create_admin()
     yield
     logger.warning("Stopping app...")
 

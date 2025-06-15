@@ -2,6 +2,9 @@
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
+        modal.style.display = 'flex';
+        // Trigger reflow
+        modal.offsetHeight;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -11,6 +14,12 @@ function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
         modal.classList.remove('active');
+        // Wait for animation to complete before hiding
+        setTimeout(() => {
+            if (!modal.classList.contains('active')) {
+                modal.style.display = 'none';
+            }
+        }, 300);
         document.body.style.overflow = '';
     }
 }

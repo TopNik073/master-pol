@@ -30,7 +30,7 @@ class AbstractAdminService(ABC):
         raise NotImplemented("This method isn't implemented in abstract class")
 
     @abstractmethod
-    async def update(self, data: PYDANTIC_MODEL_T) -> BASE_MODEL_T:
+    async def update(self, id: uuid.UUID, data: PYDANTIC_MODEL_T) -> BASE_MODEL_T:
         raise NotImplemented("This method isn't implemented in abstract class")
 
     @abstractmethod

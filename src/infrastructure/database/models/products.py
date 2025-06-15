@@ -20,13 +20,11 @@ class Products(BaseModel):
         UUID(as_uuid=True),
         primary_key=True,
         nullable=False,
-        default=uuid.uuid4(),
+        default=uuid.uuid4,
         unique=True,
     )
 
-    partner_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("partners.id"), nullable=False
-    )
+    partner_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("partners.id"), nullable=False)
     product_import_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("products_import.id"), nullable=False
     )

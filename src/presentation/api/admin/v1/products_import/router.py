@@ -11,6 +11,7 @@ from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
 from src.presentation.api.v1.schemas import (
     SuccessResponseSchema,
     ProductsImportBase,
+    ProductsTypesBase,
     PaginationMetadata,
 )
 from src.presentation.api.admin.v1.products_import.schemas import (
@@ -30,8 +31,19 @@ async def get_products_import(
     products_import, total = await service.get_paginated(**pagination.dump_to_dict())
     return SuccessResponseSchema[AdminProductsImportPaginatedResponseSchema](
         data=AdminProductsImportPaginatedResponseSchema(
-            products_import=[
-                ProductsImportBase(**product_import.dump_to_dict())
+            items=[
+                ProductsImportBase(
+                    id=product_import.id,
+                    type_id=product_import.type_id,
+                    name=product_import.name,
+                    article=product_import.article,
+                    minimum_cost=product_import.minimum_cost,
+                    product_type=ProductsTypesBase(
+                        id=product_import.product_type.id,
+                        name=product_import.product_type.name,
+                        coefficient=product_import.product_type.coefficient,
+                    ),
+                )
                 for product_import in products_import
             ],
             meta=PaginationMetadata(
@@ -50,7 +62,18 @@ async def get_products_import_by_id(
 ) -> SuccessResponseSchema[ProductsImportBase]:
     product_import = await service.get(id)
     return SuccessResponseSchema[ProductsImportBase](
-        data=ProductsImportBase(**product_import.dump_to_dict()),
+        data=ProductsImportBase(
+            id=product_import.id,
+            type_id=product_import.type_id,
+            name=product_import.name,
+            article=product_import.article,
+            minimum_cost=product_import.minimum_cost,
+            product_type=ProductsTypesBase(
+                id=product_import.product_type.id,
+                name=product_import.product_type.name,
+                coefficient=product_import.product_type.coefficient,
+            ),
+        ),
         message="Product Import fetched by id successfully",
     )
 
@@ -63,25 +86,48 @@ async def create_product_import(
 ) -> SuccessResponseSchema[ProductsImportBase]:
     product_import = await service.create(product_import)
     return SuccessResponseSchema[ProductsImportBase](
-        data=ProductsImportBase(**product_import.dump_to_dict()),
+        data=ProductsImportBase(
+            id=product_import.id,
+            type_id=product_import.type_id,
+            name=product_import.name,
+            article=product_import.article,
+            minimum_cost=product_import.minimum_cost,
+            product_type=ProductsTypesBase(
+                id=product_import.product_type.id,
+                name=product_import.product_type.name,
+                coefficient=product_import.product_type.coefficient,
+            ),
+        ),
         message="Product Import created successfully",
     )
 
 
-@admin_products_import.put("/")
+@admin_products_import.put("/{id}")
 async def update_product_import(
     service: ADMIN_PRODUCTS_IMPORT_SERVICE_DEP,
     _current_user: CURRENT_ADMIN_USER_DEP,
     product_import: AdminProductsImportControlRequestSchema,
+    id: uuid.UUID,
 ) -> SuccessResponseSchema[ProductsImportBase]:
-    product_import = await service.update(product_import)
+    product_import = await service.update(id, product_import)
     return SuccessResponseSchema[ProductsImportBase](
-        data=ProductsImportBase(**product_import.dump_to_dict()),
+        data=ProductsImportBase(
+            id=product_import.id,
+            type_id=product_import.type_id,
+            name=product_import.name,
+            article=product_import.article,
+            minimum_cost=product_import.minimum_cost,
+            product_type=ProductsTypesBase(
+                id=product_import.product_type.id,
+                name=product_import.product_type.name,
+                coefficient=product_import.product_type.coefficient,
+            ),
+        ),
         message="Product Import updated successfully",
     )
 
 
-@admin_products_import.delete("/")
+@admin_products_import.delete("/{id}")
 async def delete_product_import(
     service: ADMIN_PRODUCTS_IMPORT_SERVICE_DEP,
     _current_user: CURRENT_ADMIN_USER_DEP,

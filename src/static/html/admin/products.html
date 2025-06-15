@@ -1,0 +1,21 @@
+{% extends "admin/entity_page_base.html" %}
+
+{% block page_title %}
+    Партнёр - Продукт
+{% endblock %}
+
+{% block add_button %}
+    <button class="button button-primary button-icon" id="addEntityBtn">
+        <i class="fas fa-plus"></i>Добавить связь
+    </button>
+{% endblock %}
+
+{% block page_specific_js %}
+    <script type="module" src="{{ static('/js/admin/pages/products.js') }}"></script>
+{% endblock %}
+
+{% block extra_js %}
+{{ super() }}
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ru.js"></script>
+{% endblock %}
