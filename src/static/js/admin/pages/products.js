@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
         modalId: 'productModal',
         apiEndpoint: apiEndpoint,
         fieldDefinitions: productsFieldDefinitions,
-        titleNew: 'Добавить продукт',
-        titleEdit: 'Редактировать продукт',
+        titleNew: 'Добавить связь',
+        titleEdit: 'Редактировать связь',
         onSaveSuccess: (action) => {
             if (action === "create") {
                 showNotification("Продукт успешно добавлен!", "success");

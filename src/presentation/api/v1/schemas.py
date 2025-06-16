@@ -85,6 +85,12 @@ class PartnersProductsExtendedSchema(PartnerBase):
     discount: float
 
 
+class MaterialsBase(BaseModel):
+    id: uuid.UUID
+    name: str
+    defect_rate_percent: float
+
+
 class PaginationMetadata(BaseModel):
     total: int
     page: int

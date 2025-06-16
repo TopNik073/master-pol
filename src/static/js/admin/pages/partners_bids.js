@@ -38,12 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
         titleNew: 'Добавить партнёра',
         titleEdit: 'Редактировать партнёра',
         onSaveSuccess: (action) => {
-            if (action === "create") {
-                showNotification("Партнёр успешно создан!", "success");
-            } else if (action === "update") {
-                showNotification("Партнёр успешно обновлён!", "success");
+            if (action === "update") {
+                showNotification("Статус заявки обновлён!", "success");
             } else if (action === "delete") {
-                showNotification("Партнёр успешно удалён!", "success");
+                showNotification("Заявка отклонена!", "success");
             }
             partnersBidTable.loadData(); // Reload table data after save
         },

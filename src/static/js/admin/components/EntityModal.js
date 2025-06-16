@@ -224,7 +224,7 @@ class EntityModal {
                         const localDateTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
                         inputElement.value = localDateTime;
                     } else if (field.type === 'float') {
-                        inputElement.value = parseFloat(data[field.name]) || 0.0;
+                        inputElement.value = field.formatValue ? field.formatValue(data[field.name]) : (parseFloat(data[field.name]) || 0.0);
                     } else if (field.type === 'number') {
                         inputElement.value = parseInt(data[field.name]) || 0;
                     } else if (field.type === 'select') {
@@ -294,12 +294,17 @@ class EntityModal {
         } else {
             const inputElement = document.getElementById(field.name);
             if (inputElement) {
+                if (field.formatBeforeRequest) {
+                    formData[field.name] = field.formatBeforeRequest(inputElement.value);
+                    return;
+                };
                 if (field.type === 'checkbox') {
                     formData[field.name] = inputElement.checked;
                 } else if (field.type === 'number') {
                     formData[field.name] = parseFloat(inputElement.value);
                 } else {
                     formData[field.name] = inputElement.value;
+                    console.log(field.name, inputElement.value, typeof(inputElement.value))
                 }
             }
         }

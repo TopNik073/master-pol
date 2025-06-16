@@ -39,11 +39,14 @@ async def admin_products(request: Request):
 
 @admin_static.get("/products-import", response_class=HTMLResponse)
 async def admin_products_import(request: Request):
-    return templates.TemplateResponse(
-        "admin/products_import.html", {"request": request}
-    )
+    return templates.TemplateResponse("admin/products_import.html", {"request": request})
 
 
 @admin_static.get("/products-types", response_class=HTMLResponse)
 async def admin_products_types(request: Request):
     return templates.TemplateResponse("admin/products_types.html", {"request": request})
+
+
+@admin_static.get("/materials", response_class=HTMLResponse)
+async def admin_materials(request: Request):
+    return templates.TemplateResponse("admin/materials.html", {"request": request})

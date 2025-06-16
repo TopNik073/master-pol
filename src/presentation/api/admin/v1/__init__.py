@@ -9,6 +9,7 @@ from .products_import.router import (
 )
 from .products_types.router import admin_product_types as admin_product_types_router
 from .stats.router import admin_stats as admin_stats_router
+from .materials.router import admin_materials as admin_materials_router
 
 admin_v1 = APIRouter(prefix="/v1")
 
@@ -19,3 +20,4 @@ admin_v1.include_router(admin_products_router)
 admin_v1.include_router(admin_product_types_router)
 admin_v1.include_router(admin_products_import_router)
 admin_v1.include_router(admin_stats_router)
+admin_v1.include_router(admin_materials_router)

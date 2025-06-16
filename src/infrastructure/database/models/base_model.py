@@ -28,7 +28,8 @@ class BaseModel(AsyncAttrs, DeclarativeBase):
     def dump_to_dict(self) -> dict[str, Any]:
         obj = {}
         for col in self.__table__.columns.keys():
-            if value := getattr(self, col):
+            value = getattr(self, col)
+            if value or value == 0:
                 obj[col] = value
 
         return obj
