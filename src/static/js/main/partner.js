@@ -12,7 +12,6 @@ document.getElementById('partnerForm').addEventListener('submit', async function
         };
 
         try {
-            console.log('Try to send data to API', formData)
             const defAxiosUrl = axios.defaults.baseURL
             axios.defaults.baseURL = ''
             const response = await axios.post('api/admin/v1/partners-bid', formData)

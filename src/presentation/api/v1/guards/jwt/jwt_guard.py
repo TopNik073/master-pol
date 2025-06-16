@@ -26,7 +26,7 @@ async def get_user_from_token(
         token = credentials.credentials
         payload = jwt_handler.validate_token(token, "access")
 
-        user = await user_service.find_by_id(uuid.UUID(payload["sub"]), "one")
+        user = await user_service.get(uuid.UUID(payload["sub"]))
         if not user:
             raise HTTPException(status_code=403, detail="Invalid credentials")
         logger.debug(f"User {user.id} logged in")

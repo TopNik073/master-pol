@@ -25,7 +25,8 @@ async def get_stats(
             monthly_sales=stats["monthly_sales"],
             products_types_count=stats["product_types_count"],
             weekly_sales=[
-                AdminWeeklySalesSchema(**weekly_sale) for weekly_sale in stats["weekly_sales"]
+                AdminWeeklySalesSchema(**weekly_sale)
+                for weekly_sale in stats["weekly_sales"]
             ],
             recent_sales_details=[
                 AdminRecentSalesDetailsSchema(**recent_sales_detail)

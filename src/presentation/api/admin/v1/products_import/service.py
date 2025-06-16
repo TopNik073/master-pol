@@ -23,7 +23,9 @@ class AdminProductsImportService(BaseAdminService):
         )
 
     async def get(self, id: uuid.UUID) -> ProductsImport:
-        return await self._repo.get_by_filter("one", id=id, load_relationships=["product_type"])
+        return await self._repo.get_by_filter(
+            "one", id=id, load_relationships=["product_type"]
+        )
 
     async def update(
         self, id: uuid.UUID, data: AdminProductsImportControlRequestSchema
@@ -31,6 +33,8 @@ class AdminProductsImportService(BaseAdminService):
         await self._repo.update(id, **data.model_dump())
         return await self.get(id)
 
-    async def create(self, data: AdminProductsImportControlRequestSchema) -> ProductsImport:
+    async def create(
+        self, data: AdminProductsImportControlRequestSchema
+    ) -> ProductsImport:
         product_import = await self._repo.create(**data.model_dump())
         return await self.get(product_import.id)

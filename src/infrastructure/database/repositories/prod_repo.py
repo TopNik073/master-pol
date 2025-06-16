@@ -30,8 +30,10 @@ class ProductsRepo(PostgresRepo):
         )
 
         # Add joins for sorting and searching
-        stmt = stmt.join(self.model.partner).join(self.model.product_import).join(
-            self.model.product_import.property.mapper.class_.product_type
+        stmt = (
+            stmt.join(self.model.partner)
+            .join(self.model.product_import)
+            .join(self.model.product_import.property.mapper.class_.product_type)
         )
 
         if search_query:
@@ -40,14 +42,22 @@ class ProductsRepo(PostgresRepo):
             for column in self.model.__table__.columns:
                 if isinstance(column.type, (String, Text)):
                     search_conditions.append(column.ilike(f"%{search_query}%"))
-            
+
             # Search in related tables
-            search_conditions.extend([
-                self.model.partner.property.mapper.class_.name.ilike(f"%{search_query}%"),
-                self.model.product_import.property.mapper.class_.name.ilike(f"%{search_query}%"),
-                self.model.product_import.property.mapper.class_.product_type.property.mapper.class_.name.ilike(f"%{search_query}%")
-            ])
-            
+            search_conditions.extend(
+                [
+                    self.model.partner.property.mapper.class_.name.ilike(
+                        f"%{search_query}%"
+                    ),
+                    self.model.product_import.property.mapper.class_.name.ilike(
+                        f"%{search_query}%"
+                    ),
+                    self.model.product_import.property.mapper.class_.product_type.property.mapper.class_.name.ilike(
+                        f"%{search_query}%"
+                    ),
+                ]
+            )
+
             if search_conditions:
                 stmt = stmt.where(or_(*search_conditions))
 
@@ -69,15 +79,19 @@ class ProductsRepo(PostgresRepo):
                 "product_type_name": self.model.product_import.property.mapper.class_.product_type.property.mapper.class_.name,
                 "product_type_coefficient": self.model.product_import.property.mapper.class_.product_type.property.mapper.class_.coefficient,
             }
-            
+
             column = order_mapping.get(order_by)
             if column is not None:
-                stmt = stmt.order_by(desc(column) if order_direction == "desc" else asc(column))
+                stmt = stmt.order_by(
+                    desc(column) if order_direction == "desc" else asc(column)
+                )
 
         count_stmt = select(func.count()).select_from(self.model)
         if search_query:
-            count_stmt = count_stmt.join(self.model.partner).join(self.model.product_import).join(
-                self.model.product_import.property.mapper.class_.product_type
+            count_stmt = (
+                count_stmt.join(self.model.partner)
+                .join(self.model.product_import)
+                .join(self.model.product_import.property.mapper.class_.product_type)
             )
             if search_conditions:
                 count_stmt = count_stmt.where(or_(*search_conditions))

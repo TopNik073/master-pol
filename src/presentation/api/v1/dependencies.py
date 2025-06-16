@@ -22,4 +22,6 @@ class PaginatedRequestSchema:
         return self.__dict__
 
 
-PAGINATED_REQUEST_DEP = Annotated[PaginatedRequestSchema, Depends(PaginatedRequestSchema)]
+PAGINATED_REQUEST_DEP = Annotated[
+    PaginatedRequestSchema, Depends(PaginatedRequestSchema)
+]

@@ -31,11 +31,16 @@ class UsersRepo(PostgresRepo):
         if search_query:
             search_conditions = []
             for column in self.model.__table__.columns:
-                if isinstance(column.type, (String, Text)) and column.name != "password":
+                if (
+                    isinstance(column.type, (String, Text))
+                    and column.name != "password"
+                ):
                     if hasattr(column.type, "enums"):
                         try:
                             enum_values = [
-                                e for e in column.type.enums if search_query.lower() in e.lower()
+                                e
+                                for e in column.type.enums
+                                if search_query.lower() in e.lower()
                             ]
                             if enum_values:
                                 search_conditions.append(column.in_(enum_values))
@@ -50,7 +55,9 @@ class UsersRepo(PostgresRepo):
         if order_by:
             column = getattr(self.model, order_by, None)
             if column is not None and isinstance(column, InstrumentedAttribute):
-                stmt = stmt.order_by(desc(column) if order_direction == "desc" else asc(column))
+                stmt = stmt.order_by(
+                    desc(column) if order_direction == "desc" else asc(column)
+                )
 
         # Apply pagination
         stmt = stmt.limit(per_page).offset((page - 1) * per_page)

@@ -1,16 +1,24 @@
-from typing import Literal
-
 import uuid
+import bcrypt
 
-from src.infrastructure.database.repositories import UsersRepo
+from src.infrastructure.admin.service import BaseAdminService
+
 from src.infrastructure.database.models import Users
 
+from src.presentation.api.v1.users.schemas import UserControlRequestSchema
 
-class UserService:
-    def __init__(self, user_repo: UsersRepo):
-        self.user_repo = user_repo
+UTF_8_ENCODING = "utf-8"
 
-    async def find_by_id(
-        self, id: uuid.UUID, mode: Literal["one", "all"]
-    ) -> Users | None:
-        return await self.user_repo.get_by_filter(mode, id=id)
+class UserService(BaseAdminService):
+    @staticmethod
+    def hash_password(password: str) -> str:
+        return bcrypt.hashpw(password.encode(UTF_8_ENCODING), bcrypt.gensalt()).decode(
+            UTF_8_ENCODING
+        )
+    async def update(self, id: uuid.UUID, data: UserControlRequestSchema) -> Users:
+        if not data.password:
+            del data.password
+        else:
+            data.password = self.hash_password(data.password)
+
+        return await self._repo.update(id, **data.model_dump())

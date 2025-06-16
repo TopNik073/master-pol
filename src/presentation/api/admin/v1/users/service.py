@@ -35,7 +35,9 @@ class AdminUsersService(BaseAdminService):
         data.password = self.hash_password(data.password)
         return await self._repo.create(**data.model_dump())
 
-    async def update(self, id: uuid.UUID, data: AdminUsersControlRequestSchema) -> Users:
+    async def update(
+        self, id: uuid.UUID, data: AdminUsersControlRequestSchema
+    ) -> Users:
         if data.password and len(data.password) < 6:
             raise HTTPException(400, "Password must be 6 symbols length minimum")
         else:

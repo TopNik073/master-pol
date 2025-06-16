@@ -1,0 +1,32 @@
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Изменить профиль</h3>
+            <button class="modal-close" onclick="closeModal('profileModal')">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <form id="profileForm" class="modal-form">
+            <div class="form-group">
+                <label for="userName">Имя</label>
+                <input type="text" id="userName" name="partner_type" required>
+            </div>
+            <div class="form-group">
+                <label for="userEmail">e-mail</label>
+                <input type="text" id="userEmail" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="userPassword">Пароль</label>
+                <div class="password-input">
+                    <input type="password" id="userPassword" name="password" placeholder="Оставьте пустым, чтобы не изменять" minlength="6">
+                    <button type="button" class="password-toggle" onclick="togglePassword('userPassword', this)">
+                        <i data-lucide="eye" class="password-icon"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="button button-primary button-lg w-full">
+                Изменить профиль
+            </button>
+        </form>
+    </div>
+</div>

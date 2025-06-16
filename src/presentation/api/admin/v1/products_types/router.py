@@ -27,7 +27,10 @@ async def get_products_types(
     prod_types, total = await service.get_paginated(**pagination.dump_to_dict())
     return SuccessResponseSchema[AdminProductsTypesPaginatedResponseSchema](
         data=AdminProductsTypesPaginatedResponseSchema(
-            items=[ProductsTypesBase(**prod_type.dump_to_dict()) for prod_type in prod_types],
+            items=[
+                ProductsTypesBase(**prod_type.dump_to_dict())
+                for prod_type in prod_types
+            ],
             meta=PaginationMetadata(
                 total=total, page=pagination.page, per_page=pagination.per_page
             ),

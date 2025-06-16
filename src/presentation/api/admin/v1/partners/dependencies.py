@@ -11,4 +11,6 @@ async def get_admin_partners_service(session: DB_DEP):
     return AdminPartnersService(PartnersRepo(session))
 
 
-ADMIN_PARTNERS_SERVICE_DEP = Annotated[AdminPartnersService, Depends(get_admin_partners_service)]
+ADMIN_PARTNERS_SERVICE_DEP = Annotated[
+    AdminPartnersService, Depends(get_admin_partners_service)
+]

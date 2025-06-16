@@ -91,7 +91,8 @@ async def get_partner_by_id(
 ) -> SuccessResponseSchema[PartnerBase]:
     partner = await service.get(id)
     return SuccessResponseSchema[PartnerBase](
-        data=PartnerBase(**partner.dump_to_dict()), message="Partner fetched by id successfully"
+        data=PartnerBase(**partner.dump_to_dict()),
+        message="Partner fetched by id successfully",
     )
 
 
@@ -117,7 +118,7 @@ async def update_partner(
 ) -> SuccessResponseSchema[PartnerBase]:
     partner = await service.update(id, partner)
     return SuccessResponseSchema[PartnerBase](
-        data=partner.dump_to_dict(), message="Partner updated successfully"
+        data=PartnerBase(**partner.dump_to_dict()), message="Partner updated successfully"
     )
 
 
@@ -128,4 +129,6 @@ async def delete_partner(
     id: uuid.UUID,
 ) -> SuccessResponseSchema[uuid.UUID]:
     partner_id: uuid.UUID = await service.delete(id)
-    return SuccessResponseSchema[uuid.UUID](data=partner_id, message="Partner deleted successfully")
+    return SuccessResponseSchema[uuid.UUID](
+        data=partner_id, message="Partner deleted successfully"
+    )

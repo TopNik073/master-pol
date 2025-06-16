@@ -27,5 +27,9 @@ class AdminProductsService(BaseAdminService):
         return await self._repo.get_by_filter(
             "one",
             id=id,
-            load_relationships=["partner", "product_import", "product_import.product_type"],
+            load_relationships=[
+                "partner",
+                "product_import",
+                "product_import.product_type",
+            ],
         )

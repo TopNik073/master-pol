@@ -11,4 +11,6 @@ async def get_products_service(session: DB_DEP) -> AdminProductsService:
     return AdminProductsService(ProductsRepo(session))
 
 
-ADMIN_PRODUCTS_SERVICE_DEP = Annotated[AdminProductsService, Depends(get_products_service)]
+ADMIN_PRODUCTS_SERVICE_DEP = Annotated[
+    AdminProductsService, Depends(get_products_service)
+]

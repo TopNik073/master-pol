@@ -94,20 +94,20 @@ class AdminStatsService:
         FROM metrics m
         CROSS JOIN monthly_sales ms
         """
-        
+
         result = await self._repo.execute_sql_script(self.session, stats_query)
         if not result:
             return {}
-            
+
         row = result.first()
         if not row:
             return {}
-        
+
         return {
             "total_users": row[0],
             "total_partners": row[1],
             "monthly_sales": float(row[2]),
             "product_types_count": row[3],
             "weekly_sales": row[4] or [],  # Список продаж по дням недели
-            "recent_sales_details": row[5] or []  # Детали последних продаж
+            "recent_sales_details": row[5] or [],  # Детали последних продаж
         }

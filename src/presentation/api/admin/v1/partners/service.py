@@ -41,7 +41,11 @@ class AdminPartnersService(BaseAdminService):
             search_query,
             order_by,
             order_direction,
-            ["products", "products.product_import", "products.product_import.product_type"],
+            [
+                "products",
+                "products.product_import",
+                "products.product_import.product_type",
+            ],
         )
         self.calculate_discount(partners)
         return partners, total

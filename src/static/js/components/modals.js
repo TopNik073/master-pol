@@ -1,6 +1,13 @@
 // Modal functions
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
+    if (modalId === 'profileModal') {
+        const user = JSON.parse(localStorage.getItem('user'))
+        if (user) {
+            document.getElementById('userName').value = user.name
+            document.getElementById('userEmail').value = user.email
+        }
+    }
     if (modal) {
         modal.style.display = 'flex';
         // Trigger reflow

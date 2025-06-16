@@ -45,7 +45,9 @@ class PartnersBidRepo(PostgresRepo):
         if order_by:
             column = getattr(self.model, order_by, None)
             if column is not None:
-                stmt = stmt.order_by(desc(column) if order_direction == "desc" else asc(column))
+                stmt = stmt.order_by(
+                    desc(column) if order_direction == "desc" else asc(column)
+                )
 
         count_stmt = (
             select(func.count())

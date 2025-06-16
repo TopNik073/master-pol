@@ -24,7 +24,9 @@ class Products(BaseModel):
         unique=True,
     )
 
-    partner_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("partners.id"), nullable=False)
+    partner_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("partners.id"), nullable=False
+    )
     product_import_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("products_import.id"), nullable=False
     )

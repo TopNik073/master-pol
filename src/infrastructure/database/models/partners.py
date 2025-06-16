@@ -23,7 +23,9 @@ class Partners(BaseModel):
         unique=True,
     )
 
-    status: Mapped[PartnerStatuses] = mapped_column(nullable=False, default=PartnerStatuses.pending)
+    status: Mapped[PartnerStatuses] = mapped_column(
+        nullable=False, default=PartnerStatuses.pending
+    )
 
     partner_type: Mapped[str] = mapped_column(nullable=False)
     name: Mapped[str] = mapped_column(nullable=False)

@@ -83,4 +83,6 @@ async def delete_user(
     id: uuid.UUID,
 ) -> SuccessResponseSchema[uuid.UUID]:
     user_id = await service.delete(id)
-    return SuccessResponseSchema[uuid.UUID](data=user_id, message="User deleted successfully")
+    return SuccessResponseSchema[uuid.UUID](
+        data=user_id, message="User deleted successfully"
+    )

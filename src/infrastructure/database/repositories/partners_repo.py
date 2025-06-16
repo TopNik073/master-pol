@@ -22,13 +22,17 @@ class PartnersRepo(PostgresRepo):
         order_direction: str = "asc",
         include: list[str] | None = None,
     ) -> tuple[list[Partners], int]:
-        stmt = select(self.model).options(
-            selectinload(self.model.products)
-            .selectinload(self.model.products.property.mapper.class_.product_import)
-            .selectinload(
-                self.model.products.property.mapper.class_.product_import.property.mapper.class_.product_type
+        stmt = (
+            select(self.model)
+            .options(
+                selectinload(self.model.products)
+                .selectinload(self.model.products.property.mapper.class_.product_import)
+                .selectinload(
+                    self.model.products.property.mapper.class_.product_import.property.mapper.class_.product_type
+                )
             )
-        ).where(self.model.status == PartnerStatuses.active)
+            .where(self.model.status == PartnerStatuses.active)
+        )
 
         if search_query:
             search_conditions = []
@@ -41,9 +45,15 @@ class PartnersRepo(PostgresRepo):
         if order_by:
             column = getattr(self.model, order_by, None)
             if column is not None:
-                stmt = stmt.order_by(desc(column) if order_direction == "desc" else asc(column))
+                stmt = stmt.order_by(
+                    desc(column) if order_direction == "desc" else asc(column)
+                )
 
-        count_stmt = select(func.count()).select_from(self.model).where(self.model.status == PartnerStatuses.active)
+        count_stmt = (
+            select(func.count())
+            .select_from(self.model)
+            .where(self.model.status == PartnerStatuses.active)
+        )
         if search_query and search_conditions:
             count_stmt = count_stmt.where(or_(*search_conditions))
         total = await self._session.scalar(count_stmt)

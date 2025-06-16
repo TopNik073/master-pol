@@ -25,7 +25,7 @@ class AuthService:
         self.user_repo = user_repo
         self.jwt_handler = JWTHandler()
 
-    def create_auth__response(self, user: Users):
+    def create_auth_response(self, user: Users):
         access_token, access_exp = self.jwt_handler.encode(user.id, "access")
         refresh_token, refresh_exp = self.jwt_handler.encode(user.id, "refresh")
 
@@ -62,17 +62,17 @@ class AuthService:
         )
 
         users_res = await self.user_repo.create(**user_obj.dump_to_dict())
-        return self.create_auth__response(users_res)
+        return self.create_auth_response(users_res)
 
     async def login(self, user: LoginRequestSchema) -> AuthResponseSchema | None:
         res: Users = await self.user_repo.get_by_filter("one", email=user.email)
         if res:
             if self.validate_password(user.password, res.password):
-                return self.create_auth__response(res)
+                return self.create_auth_response(res)
 
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
     async def refresh(self, refresh_token: RefreshTokenRequest) -> AuthResponseSchema:
         token = self.jwt_handler.validate_token(refresh_token.token, "refresh")
         user = await self.user_repo.get_by_filter("one", id=uuid.UUID(token["sub"]))
-        return self.create_auth__response(user)
+        return self.create_auth_response(user)

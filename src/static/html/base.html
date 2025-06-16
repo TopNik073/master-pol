@@ -37,6 +37,7 @@
     {% include "components/login.modal.html" %}
     {% include "components/register.modal.html" %}
     {% include "components/partner.modal.html" %}
+    {% include "components/profile.modal.html" %}
 
     <script>
         lucide.createIcons();
@@ -46,6 +47,7 @@
     <script src="{{ static('/js/main/api.js') }}"></script>
     <script src="{{ static('/js/main/auth.js') }}"></script>
     <script src="{{ static('/js/main/partner.js') }}"></script>
+    <script src="{{ static('/js/main/profile.js') }}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -39,7 +39,9 @@ async def admin_products(request: Request):
 
 @admin_static.get("/products-import", response_class=HTMLResponse)
 async def admin_products_import(request: Request):
-    return templates.TemplateResponse("admin/products_import.html", {"request": request})
+    return templates.TemplateResponse(
+        "admin/products_import.html", {"request": request}
+    )
 
 
 @admin_static.get("/products-types", response_class=HTMLResponse)

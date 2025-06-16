@@ -126,7 +126,9 @@ class PostgresRepo(AbstractRepo):
                     if hasattr(column.type, "enums"):
                         try:
                             enum_values = [
-                                e for e in column.type.enums if search_query.lower() in e.lower()
+                                e
+                                for e in column.type.enums
+                                if search_query.lower() in e.lower()
                             ]
                             if enum_values:
                                 search_conditions.append(column.in_(enum_values))
@@ -141,7 +143,9 @@ class PostgresRepo(AbstractRepo):
         if order_by:
             column = getattr(self.model, order_by, None)
             if column is not None and isinstance(column, InstrumentedAttribute):
-                stmt = stmt.order_by(desc(column) if order_direction == "desc" else asc(column))
+                stmt = stmt.order_by(
+                    desc(column) if order_direction == "desc" else asc(column)
+                )
 
         # Apply pagination
         stmt = stmt.limit(per_page).offset((page - 1) * per_page)
@@ -169,7 +173,12 @@ class PostgresRepo(AbstractRepo):
         return model
 
     async def update(self, id: uuid.UUID, **data):
-        query = update(self.model).where(self.model.id == id).values(**data).returning(self.model)
+        query = (
+            update(self.model)
+            .where(self.model.id == id)
+            .values(**data)
+            .returning(self.model)
+        )
         result = await self._session.execute(query)
         model = result.scalar_one()
 

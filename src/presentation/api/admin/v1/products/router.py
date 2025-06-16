@@ -3,7 +3,9 @@ import uuid
 from fastapi import APIRouter
 
 from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
-from src.presentation.api.admin.v1.products.dependencies import ADMIN_PRODUCTS_SERVICE_DEP
+from src.presentation.api.admin.v1.products.dependencies import (
+    ADMIN_PRODUCTS_SERVICE_DEP,
+)
 from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
 
 from src.presentation.api.admin.v1.products.schemas import (
@@ -63,7 +65,9 @@ async def get_products(
 
 @admin_products.get("/{id}")
 async def get_product(
-    service: ADMIN_PRODUCTS_SERVICE_DEP, _current_user: CURRENT_ADMIN_USER_DEP, id: uuid.UUID
+    service: ADMIN_PRODUCTS_SERVICE_DEP,
+    _current_user: CURRENT_ADMIN_USER_DEP,
+    id: uuid.UUID,
 ) -> SuccessResponseSchema[ProductsExtendedSchema]:
     product = await service.get(id)
     return SuccessResponseSchema[ProductsExtendedSchema](
@@ -97,7 +101,8 @@ async def create_product(
 ) -> SuccessResponseSchema[ProductsBase]:
     product = await service.create(product)
     return SuccessResponseSchema[ProductsBase](
-        data=ProductsBase(**product.dump_to_dict()), message="Product created successfully"
+        data=ProductsBase(**product.dump_to_dict()),
+        message="Product created successfully",
     )
 
 
@@ -110,13 +115,18 @@ async def update_product(
 ) -> SuccessResponseSchema[ProductsBase]:
     product = await service.update(id, product)
     return SuccessResponseSchema[ProductsBase](
-        data=ProductsBase(**product.dump_to_dict()), message="Product updated successfully"
+        data=ProductsBase(**product.dump_to_dict()),
+        message="Product updated successfully",
     )
 
 
 @admin_products.delete("/{id}")
 async def delete_product(
-    service: ADMIN_PRODUCTS_SERVICE_DEP, _current_user: CURRENT_ADMIN_USER_DEP, id: uuid.UUID
+    service: ADMIN_PRODUCTS_SERVICE_DEP,
+    _current_user: CURRENT_ADMIN_USER_DEP,
+    id: uuid.UUID,
 ) -> SuccessResponseSchema[uuid.UUID]:
     product_id = await service.delete(id)
-    return SuccessResponseSchema[uuid.UUID](data=product_id, message="Product deleted successfully")
+    return SuccessResponseSchema[uuid.UUID](
+        data=product_id, message="Product deleted successfully"
+    )

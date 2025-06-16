@@ -24,4 +24,6 @@ class ProductsTypes(BaseModel):
     name: Mapped[str] = mapped_column(nullable=False)
     coefficient: Mapped[float] = mapped_column(nullable=False)
 
-    import_products: Mapped[list["ProductsImport"]] = relationship(back_populates="product_type")
+    import_products: Mapped[list["ProductsImport"]] = relationship(
+        back_populates="product_type"
+    )
