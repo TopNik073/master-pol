@@ -1,17 +1,15 @@
-from contextlib import asynccontextmanager
 from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
 
+import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-import uvicorn
 
 from src.core.config import config
-from src.core.middleware import RequestLoggingMiddleware
 from src.core.logger import get_logger
-
-from src.presentation.front import front_router
+from src.core.middleware import RequestLoggingMiddleware
 from src.presentation.api import api_router
-
+from src.presentation.front import front_router
 from src.utils import create_admin
 
 logger = get_logger(__name__)

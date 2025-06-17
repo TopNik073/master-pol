@@ -1,7 +1,8 @@
-from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
-from src.infrastructure.database.enums.roles import Roles
 
+from pydantic import BaseModel, EmailStr, Field
+
+from src.infrastructure.database.enums.roles import Roles
 from src.presentation.api.v1.schemas import UserBase
 
 

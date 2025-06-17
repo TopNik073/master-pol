@@ -1,4 +1,4 @@
-from typing import Annotated, Literal, Any
+from typing import Annotated, Any, Literal
 
 from fastapi import Depends, Query
 

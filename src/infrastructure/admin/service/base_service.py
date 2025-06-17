@@ -1,12 +1,12 @@
 import uuid
-from typing import TypeVar, Literal
-from pydantic import BaseModel as PydanticBaseModel
+from typing import Literal, TypeVar
 
 from fastapi import HTTPException
+from pydantic import BaseModel as PydanticBaseModel
 
-from src.infrastructure.database.repositories.base_repo import AbstractRepo
 from src.infrastructure.admin.service.abstract_service import AbstractAdminService
 from src.infrastructure.database.models import BaseModel
+from src.infrastructure.database.repositories.base_repo import AbstractRepo
 
 ABSTRACT_REPO_T = TypeVar("ABSTRACT_REPO_T", bound=AbstractRepo)
 BASE_MODEL_T = TypeVar("BASE_MODEL_T", bound=BaseModel)

@@ -1,9 +1,9 @@
 import uuid
+
 from pydantic import BaseModel, EmailStr
 
-from src.presentation.api.v1.schemas import PartnerBidBase, PaginationMetadata
-
 from src.infrastructure.database.enums.partner_statuses import PartnerStatuses
+from src.presentation.api.v1.schemas import PaginationMetadata, PartnerBidBase
 
 
 class PartnerBidExtendedSchema(PartnerBidBase):

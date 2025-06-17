@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
-from src.presentation.front.templates import templates
 
+from src.presentation.front.templates import templates
 
 main_static = APIRouter()
 

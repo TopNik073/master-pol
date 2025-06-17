@@ -5,23 +5,21 @@ from fastapi import APIRouter
 from src.presentation.api.admin.v1.partners.dependencies import (
     ADMIN_PARTNERS_SERVICE_DEP,
 )
-from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
-from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
-
-from src.presentation.api.v1.schemas import (
-    SuccessResponseSchema,
-    ProductsImportBase,
-    ProductsExtendedSchema,
-    ProductsTypesBase,
-)
 from src.presentation.api.admin.v1.partners.schemas import (
-    AdminPartnersPaginatedResponseSchema,
-    PartnersProductsExtendedSchema,
-    PartnerBase,
-    PaginationMetadata,
     AdminControlPartnerRequest,
+    AdminPartnersPaginatedResponseSchema,
+    PaginationMetadata,
+    PartnerBase,
+    PartnersProductsExtendedSchema,
 )
-
+from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
+from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
+from src.presentation.api.v1.schemas import (
+    ProductsExtendedSchema,
+    ProductsImportBase,
+    ProductsTypesBase,
+    SuccessResponseSchema,
+)
 
 admin_partners = APIRouter(prefix="/partners", tags=["Partners"])
 
@@ -54,19 +52,31 @@ async def get_partners(
                             id=prod.id,
                             quantity_products=prod.quantity_products,
                             sell_date=prod.sell_date,
-                            partner=PartnerBase(**partner.dump_to_dict()) if prod.partner else None,
-                            product_import=ProductsImportBase(
-                                id=prod.product_import.id,
-                                type_id=prod.product_import.type_id,
-                                name=prod.product_import.name,
-                                article=prod.product_import.article,
-                                minimum_cost=prod.product_import.minimum_cost,
-                                product_type=ProductsTypesBase(
-                                    id=prod.product_import.product_type.id,
-                                    name=prod.product_import.product_type.name,
-                                    coefficient=prod.product_import.product_type.coefficient,
-                                ) if prod.product_import.product_type else None,
-                            ) if prod.product_import else None,
+                            partner=(
+                                PartnerBase(**partner.dump_to_dict())
+                                if prod.partner
+                                else None
+                            ),
+                            product_import=(
+                                ProductsImportBase(
+                                    id=prod.product_import.id,
+                                    type_id=prod.product_import.type_id,
+                                    name=prod.product_import.name,
+                                    article=prod.product_import.article,
+                                    minimum_cost=prod.product_import.minimum_cost,
+                                    product_type=(
+                                        ProductsTypesBase(
+                                            id=prod.product_import.product_type.id,
+                                            name=prod.product_import.product_type.name,
+                                            coefficient=prod.product_import.product_type.coefficient,
+                                        )
+                                        if prod.product_import.product_type
+                                        else None
+                                    ),
+                                )
+                                if prod.product_import
+                                else None
+                            ),
                         )
                         for prod in partner.products
                     ],
@@ -118,7 +128,8 @@ async def update_partner(
 ) -> SuccessResponseSchema[PartnerBase]:
     partner = await service.update(id, partner)
     return SuccessResponseSchema[PartnerBase](
-        data=PartnerBase(**partner.dump_to_dict()), message="Partner updated successfully"
+        data=PartnerBase(**partner.dump_to_dict()),
+        message="Partner updated successfully",
     )
 
 

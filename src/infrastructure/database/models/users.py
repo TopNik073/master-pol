@@ -1,10 +1,10 @@
-from src.infrastructure.database.models.base_model import BaseModel
-from src.infrastructure.database.enums.roles import Roles
-
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy.dialects.postgresql import UUID
-
 import uuid
+
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped, mapped_column
+
+from src.infrastructure.database.enums.roles import Roles
+from src.infrastructure.database.models.base_model import BaseModel
 
 
 class Users(BaseModel):

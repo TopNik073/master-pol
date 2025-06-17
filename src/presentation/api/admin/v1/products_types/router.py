@@ -5,15 +5,14 @@ from fastapi import APIRouter
 from src.presentation.api.admin.v1.products_types.dependencies import (
     ADMIN_PRODUCTS_TYPES_SERVICE_DEP,
 )
-from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
-from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
-
-from src.presentation.api.v1.schemas import SuccessResponseSchema, PaginationMetadata
 from src.presentation.api.admin.v1.products_types.schemas import (
+    AdminControlProductsTypesRequestSchema,
     AdminProductsTypesPaginatedResponseSchema,
     ProductsTypesBase,
-    AdminControlProductsTypesRequestSchema,
 )
+from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
+from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
+from src.presentation.api.v1.schemas import PaginationMetadata, SuccessResponseSchema
 
 admin_product_types = APIRouter(prefix="/products-types", tags=["Products Types"])
 

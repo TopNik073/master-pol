@@ -1,19 +1,19 @@
 import uuid
+
 from fastapi import APIRouter
 
-from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
-from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
 from src.presentation.api.admin.v1.partners_bid.dependencies import (
     ADMIN_PARTNERS_BID_SERVICE_DEP,
 )
-
-from src.presentation.api.v1.schemas import SuccessResponseSchema, PaginationMetadata
 from src.presentation.api.admin.v1.partners_bid.schemas import (
-    PartnerBidBase,
     AdminPartnerBidPaginatedResponseSchema,
-    PartnerBidExtendedSchema,
     AdminPartnersBidControlRequestSchema,
+    PartnerBidBase,
+    PartnerBidExtendedSchema,
 )
+from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
+from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
+from src.presentation.api.v1.schemas import PaginationMetadata, SuccessResponseSchema
 
 admin_partners_bid = APIRouter(prefix="/partners-bid", tags=["Partners (Bid)"])
 

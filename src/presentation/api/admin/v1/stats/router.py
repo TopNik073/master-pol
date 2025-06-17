@@ -1,14 +1,13 @@
 from fastapi import APIRouter
 
-from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
 from src.presentation.api.admin.v1.stats.dependencies import ADMIN_STATS_SERVICE_DEP
-
-from src.presentation.api.v1.schemas import SuccessResponseSchema
 from src.presentation.api.admin.v1.stats.schemas import (
+    AdminRecentSalesDetailsSchema,
     AdminStatsResponse,
     AdminWeeklySalesSchema,
-    AdminRecentSalesDetailsSchema,
 )
+from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
+from src.presentation.api.v1.schemas import SuccessResponseSchema
 
 admin_stats = APIRouter(prefix="/stats", tags=["Stats"])
 

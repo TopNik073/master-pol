@@ -18,12 +18,15 @@ document.addEventListener('DOMContentLoaded', () => {
         {label: 'Скидка', field: 'discount', sortable: false, render: (partner) => `${parseInt(parseFloat(partner.discount) * 100)} %`},
         {label: 'Кол-во продукции', field: 'products', sortable: false, render: (partner) => partner.products.length},
         {label: 'Кол-во типов', field: 'products.product_type', sortable: false, render: (partner) => {
-            let prod_types = []
+            if (partner.products.length === 0) return 0
+            let prod_types = new Set()
             for (const prod of partner.products) {
-                if (prod.product_import.product_type.id in prod_types) continue
-                prod_types.push(prod.product_import.product_type.id)
+                const type_id = prod.product_import?.product_type?.id
+                if (!type_id) continue
+                prod_types.add(type_id)
             }
-            return prod_types.length
+            console.log(prod_types)
+            return prod_types.size
         }}
     ]
 

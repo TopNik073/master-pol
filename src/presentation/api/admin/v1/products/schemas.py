@@ -1,9 +1,9 @@
 import uuid
-
-from pydantic import BaseModel
 from datetime import datetime
 
-from src.presentation.api.v1.schemas import ProductsExtendedSchema, PaginationMetadata
+from pydantic import BaseModel
+
+from src.presentation.api.v1.schemas import PaginationMetadata, ProductsExtendedSchema
 
 
 class AdminProductsPaginatedResponseSchema(BaseModel):

@@ -2,24 +2,23 @@ import uuid
 
 from fastapi import APIRouter
 
-from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
 from src.presentation.api.admin.v1.products.dependencies import (
     ADMIN_PRODUCTS_SERVICE_DEP,
 )
-from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
-
 from src.presentation.api.admin.v1.products.schemas import (
-    AdminProductsPaginatedResponseSchema,
     AdminProductControlRequestSchema,
+    AdminProductsPaginatedResponseSchema,
 )
+from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
+from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
 from src.presentation.api.v1.schemas import (
-    SuccessResponseSchema,
+    PaginationMetadata,
+    PartnerBase,
     ProductsBase,
     ProductsExtendedSchema,
-    PartnerBase,
     ProductsImportBase,
     ProductsTypesBase,
-    PaginationMetadata,
+    SuccessResponseSchema,
 )
 
 admin_products = APIRouter(prefix="/products", tags=["Products"])
@@ -39,19 +38,31 @@ async def get_products(
                     id=product.id,
                     quantity_products=product.quantity_products,
                     sell_date=product.sell_date,
-                    partner=PartnerBase(**product.partner.dump_to_dict()) if product.partner else None,
-                    product_import=ProductsImportBase(
-                        id=product.product_import.id,
-                        type_id=product.product_import.type_id,
-                        name=product.product_import.name,
-                        article=product.product_import.article,
-                        minimum_cost=product.product_import.minimum_cost,
-                        product_type=ProductsTypesBase(
-                            id=product.product_import.product_type.id,
-                            name=product.product_import.product_type.name,
-                            coefficient=product.product_import.product_type.coefficient,
-                        ) if product.product_import.product_type else None,
-                    ) if product.product_import else None,
+                    partner=(
+                        PartnerBase(**product.partner.dump_to_dict())
+                        if product.partner
+                        else None
+                    ),
+                    product_import=(
+                        ProductsImportBase(
+                            id=product.product_import.id,
+                            type_id=product.product_import.type_id,
+                            name=product.product_import.name,
+                            article=product.product_import.article,
+                            minimum_cost=product.product_import.minimum_cost,
+                            product_type=(
+                                ProductsTypesBase(
+                                    id=product.product_import.product_type.id,
+                                    name=product.product_import.product_type.name,
+                                    coefficient=product.product_import.product_type.coefficient,
+                                )
+                                if product.product_import.product_type
+                                else None
+                            ),
+                        )
+                        if product.product_import
+                        else None
+                    ),
                 )
                 for product in products
             ],
@@ -75,19 +86,31 @@ async def get_product(
             id=product.id,
             quantity_products=product.quantity_products,
             sell_date=product.sell_date,
-            partner=PartnerBase(**product.partner.dump_to_dict()) if product.partner else None,
-            product_import=ProductsImportBase(
-                id=product.product_import.id,
-                type_id=product.product_import.type_id,
-                name=product.product_import.name,
-                article=product.product_import.article,
-                minimum_cost=product.product_import.minimum_cost,
-                product_type=ProductsTypesBase(
-                    id=product.product_import.product_type.id,
-                    name=product.product_import.product_type.name,
-                    coefficient=product.product_import.product_type.coefficient,
-                ) if product.product_import.product_type else None,
-            ) if product.product_import else None,
+            partner=(
+                PartnerBase(**product.partner.dump_to_dict())
+                if product.partner
+                else None
+            ),
+            product_import=(
+                ProductsImportBase(
+                    id=product.product_import.id,
+                    type_id=product.product_import.type_id,
+                    name=product.product_import.name,
+                    article=product.product_import.article,
+                    minimum_cost=product.product_import.minimum_cost,
+                    product_type=(
+                        ProductsTypesBase(
+                            id=product.product_import.product_type.id,
+                            name=product.product_import.product_type.name,
+                            coefficient=product.product_import.product_type.coefficient,
+                        )
+                        if product.product_import.product_type
+                        else None
+                    ),
+                )
+                if product.product_import
+                else None
+            ),
         ),
         message="Product fetched successfully",
     )

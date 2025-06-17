@@ -1,12 +1,12 @@
-from typing import TYPE_CHECKING
-from src.infrastructure.database.models.base_model import BaseModel
-
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy import ForeignKey
-
 import datetime
 import uuid
+from typing import TYPE_CHECKING
+
+from sqlalchemy import ForeignKey
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from src.infrastructure.database.models.base_model import BaseModel
 
 if TYPE_CHECKING:
     from src.infrastructure.database.models.partners import Partners
@@ -25,8 +25,7 @@ class Products(BaseModel):
     )
 
     partner_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("partners.id", ondelete="SET NULL"),
-        nullable=True
+        ForeignKey("partners.id", ondelete="SET NULL"), nullable=True
     )
     product_import_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("products_import.id", ondelete="SET NULL"), nullable=True
@@ -35,10 +34,8 @@ class Products(BaseModel):
     sell_date: Mapped[datetime.datetime] = mapped_column(nullable=False)
 
     partner: Mapped["Partners"] = relationship(
-        back_populates="products",
-        passive_deletes=True
+        back_populates="products", passive_deletes=True
     )
     product_import: Mapped["ProductsImport"] = relationship(
-        back_populates="products",
-        passive_deletes=True
+        back_populates="products", passive_deletes=True
     )

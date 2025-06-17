@@ -1,3 +1,3 @@
-from .jwt_guard import CURRENT_USER_DEP, CURRENT_ADMIN_USER_DEP
+from .jwt_guard import CURRENT_ADMIN_USER_DEP, CURRENT_USER_DEP
 
 __all__ = ["CURRENT_USER_DEP", "CURRENT_ADMIN_USER_DEP"]

@@ -1,8 +1,8 @@
-from typing import TypeVar
+from typing import Any, Dict, TypeVar
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.infrastructure.database.repositories.base_repo import AbstractRepo
-from typing import Dict, Any
 
 REPO_T = TypeVar("REPO_T", bound=AbstractRepo)
 

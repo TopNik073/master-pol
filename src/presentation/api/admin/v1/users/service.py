@@ -4,9 +4,8 @@ import bcrypt
 from fastapi import HTTPException
 
 from src.infrastructure.admin.service import BaseAdminService
-
-from src.presentation.api.admin.v1.users.schemas import AdminUsersControlRequestSchema
 from src.infrastructure.database.models import Users
+from src.presentation.api.admin.v1.users.schemas import AdminUsersControlRequestSchema
 
 UTF_8_ENCODING = "utf-8"
 

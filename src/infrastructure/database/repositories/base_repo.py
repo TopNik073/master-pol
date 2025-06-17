@@ -1,10 +1,10 @@
-from typing import Literal, TypeVar, Any
 import uuid
 from abc import ABC, abstractmethod
+from typing import Any, Literal, TypeVar
 
+from sqlalchemy import String, Text, asc, delete, desc, func, or_, select, text, update
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update, delete, func, or_, asc, desc, String, Text, text
-from sqlalchemy.orm import joinedload, InstrumentedAttribute
+from sqlalchemy.orm import InstrumentedAttribute, joinedload
 
 from src.infrastructure.database.models import BaseModel
 

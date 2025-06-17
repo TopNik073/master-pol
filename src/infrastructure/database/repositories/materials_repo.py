@@ -1,6 +1,7 @@
-from src.infrastructure.database.repositories.base_repo import PostgresRepo
-from src.infrastructure.database.models import Materials
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.infrastructure.database.models import Materials
+from src.infrastructure.database.repositories.base_repo import PostgresRepo
 
 
 class MaterialsRepo(PostgresRepo):

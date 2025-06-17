@@ -1,10 +1,10 @@
-from src.infrastructure.database.repositories.base_repo import PostgresRepo
-from src.infrastructure.database.models.partners import Partners
-from src.infrastructure.database.enums.partner_statuses import PartnerStatuses
+from sqlalchemy import String, Text, asc, desc, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from sqlalchemy.orm import selectinload
-from sqlalchemy import select, func, or_, desc, asc, String, Text
+
+from src.infrastructure.database.enums.partner_statuses import PartnerStatuses
+from src.infrastructure.database.models.partners import Partners
+from src.infrastructure.database.repositories.base_repo import PostgresRepo
 
 
 class PartnersRepo(PostgresRepo):

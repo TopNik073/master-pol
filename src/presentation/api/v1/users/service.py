@@ -1,13 +1,13 @@
 import uuid
+
 import bcrypt
 
 from src.infrastructure.admin.service import BaseAdminService
-
 from src.infrastructure.database.models import Users
-
 from src.presentation.api.v1.users.schemas import UserControlRequestSchema
 
 UTF_8_ENCODING = "utf-8"
+
 
 class UserService(BaseAdminService):
     @staticmethod
@@ -15,6 +15,7 @@ class UserService(BaseAdminService):
         return bcrypt.hashpw(password.encode(UTF_8_ENCODING), bcrypt.gensalt()).decode(
             UTF_8_ENCODING
         )
+
     async def update(self, id: uuid.UUID, data: UserControlRequestSchema) -> Users:
         if not data.password:
             del data.password

@@ -1,7 +1,8 @@
 import uuid
-from typing import TypeVar, Literal
-from pydantic import BaseModel as PydanticBaseModel
 from abc import ABC, abstractmethod
+from typing import Literal, TypeVar
+
+from pydantic import BaseModel as PydanticBaseModel
 
 from src.infrastructure.database.models import BaseModel
 

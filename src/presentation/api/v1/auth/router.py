@@ -1,14 +1,13 @@
 from fastapi import APIRouter
 
-from src.presentation.api.v1.schemas import SuccessResponseSchema
+from src.presentation.api.v1.auth.dependencies import AUTH_SERVICE_DEP
 from src.presentation.api.v1.auth.schemas import (
-    RegisterRequestSchema,
+    AuthResponseSchema,
     LoginRequestSchema,
     RefreshTokenRequest,
-    AuthResponseSchema,
+    RegisterRequestSchema,
 )
-
-from src.presentation.api.v1.auth.dependencies import AUTH_SERVICE_DEP
+from src.presentation.api.v1.schemas import SuccessResponseSchema
 
 auth = APIRouter(prefix="/auth", tags=["Auth"])
 

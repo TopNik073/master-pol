@@ -1,8 +1,7 @@
 from pydantic import BaseModel, EmailStr
 
-from src.presentation.api.v1.schemas import PaginationMetadata, UserBase
-
 from src.infrastructure.database.enums.roles import Roles
+from src.presentation.api.v1.schemas import PaginationMetadata, UserBase
 
 
 class AdminUsersPaginatedResponseSchema(BaseModel):

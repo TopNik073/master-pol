@@ -1,8 +1,8 @@
-from typing import TypeVar, Generic
-from pydantic import BaseModel, Field, EmailStr
 import uuid
-
 from datetime import datetime
+from typing import Generic, TypeVar
+
+from pydantic import BaseModel, EmailStr, Field
 
 from src.infrastructure.database.enums.partner_statuses import PartnerStatuses
 from src.infrastructure.database.enums.roles import Roles

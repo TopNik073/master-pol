@@ -1,15 +1,15 @@
+import uuid
 from typing import TYPE_CHECKING
+
+from sqlalchemy import ForeignKey
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from src.infrastructure.database.models.base_model import BaseModel
 
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy import ForeignKey
-
-import uuid
-
 if TYPE_CHECKING:
-    from src.infrastructure.database.models.products_types import ProductsTypes
     from src.infrastructure.database.models.products import Products
+    from src.infrastructure.database.models.products_types import ProductsTypes
 
 
 class ProductsImport(BaseModel):
@@ -31,11 +31,10 @@ class ProductsImport(BaseModel):
     minimum_cost: Mapped[float] = mapped_column(nullable=False)
 
     product_type: Mapped["ProductsTypes"] = relationship(
-        back_populates="import_products",
-        passive_deletes=True
+        back_populates="import_products", passive_deletes=True
     )
     products: Mapped[list["Products"]] = relationship(
         back_populates="product_import",
         cascade="all, delete-orphan",
-        passive_deletes=True
+        passive_deletes=True,
     )

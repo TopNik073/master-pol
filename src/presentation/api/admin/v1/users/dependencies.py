@@ -2,10 +2,9 @@ from typing import Annotated
 
 from fastapi import Depends
 
-from src.presentation.api.admin.v1.users.service import AdminUsersService
-from src.infrastructure.database.repositories import UsersRepo
-
 from src.infrastructure.database.connection import DB_DEP
+from src.infrastructure.database.repositories import UsersRepo
+from src.presentation.api.admin.v1.users.service import AdminUsersService
 
 
 def get_admin_users_service(session: DB_DEP):

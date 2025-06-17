@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from .main.router import main_static as main_static_router
 from .admin.router import admin_static as admin_static_router
+from .main.router import main_static as main_static_router
 
 front_router = APIRouter(tags=["Static Pages"])
 

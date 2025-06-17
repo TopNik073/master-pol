@@ -1,9 +1,8 @@
 from fastapi import HTTPException
 
 from src.infrastructure.admin.service import BaseAdminService
-from src.infrastructure.database.models import Partners
 from src.infrastructure.database.enums.partner_statuses import PartnerStatuses
-
+from src.infrastructure.database.models import Partners
 from src.presentation.api.admin.v1.partners_bid.schemas import PartnerBidBase
 
 

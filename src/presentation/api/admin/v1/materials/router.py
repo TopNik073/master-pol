@@ -2,14 +2,19 @@ import uuid
 
 from fastapi import APIRouter
 
-from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
-from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
-from src.presentation.api.admin.v1.materials.dependencies import ADMIN_MATERIALS_SERVICE_DEP
-
-from src.presentation.api.v1.schemas import SuccessResponseSchema, MaterialsBase, PaginationMetadata
+from src.presentation.api.admin.v1.materials.dependencies import (
+    ADMIN_MATERIALS_SERVICE_DEP,
+)
 from src.presentation.api.admin.v1.materials.schemas import (
-    AdminMaterialsPaginatedResponse,
     AdminMaterialsControlRequest,
+    AdminMaterialsPaginatedResponse,
+)
+from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
+from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
+from src.presentation.api.v1.schemas import (
+    MaterialsBase,
+    PaginationMetadata,
+    SuccessResponseSchema,
 )
 
 admin_materials = APIRouter(prefix="/materials", tags=["Materials"])
@@ -35,11 +40,14 @@ async def get_materials(
 
 @admin_materials.get("/{id}")
 async def get_material(
-    service: ADMIN_MATERIALS_SERVICE_DEP, _current_user: CURRENT_ADMIN_USER_DEP, id: uuid.UUID
+    service: ADMIN_MATERIALS_SERVICE_DEP,
+    _current_user: CURRENT_ADMIN_USER_DEP,
+    id: uuid.UUID,
 ) -> SuccessResponseSchema[MaterialsBase]:
     material = await service.get(id)
     return SuccessResponseSchema[MaterialsBase](
-        data=MaterialsBase(**material.dump_to_dict()), message="Material fetched successfully"
+        data=MaterialsBase(**material.dump_to_dict()),
+        message="Material fetched successfully",
     )
 
 
@@ -51,7 +59,8 @@ async def create_material(
 ) -> SuccessResponseSchema[MaterialsBase]:
     material = await service.create(material)
     return SuccessResponseSchema[MaterialsBase](
-        data=MaterialsBase(**material.dump_to_dict()), message="Material created successfully"
+        data=MaterialsBase(**material.dump_to_dict()),
+        message="Material created successfully",
     )
 
 
@@ -64,13 +73,16 @@ async def update_material(
 ) -> SuccessResponseSchema[MaterialsBase]:
     material = await service.update(id, material)
     return SuccessResponseSchema[MaterialsBase](
-        data=MaterialsBase(**material.dump_to_dict()), message="Material updated successfully"
+        data=MaterialsBase(**material.dump_to_dict()),
+        message="Material updated successfully",
     )
 
 
 @admin_materials.delete("/{id}")
 async def delete_material(
-    service: ADMIN_MATERIALS_SERVICE_DEP, _current_user: CURRENT_ADMIN_USER_DEP, id: uuid.UUID
+    service: ADMIN_MATERIALS_SERVICE_DEP,
+    _current_user: CURRENT_ADMIN_USER_DEP,
+    id: uuid.UUID,
 ) -> SuccessResponseSchema[uuid.UUID]:
     material_id = await service.delete(id)
     return SuccessResponseSchema[uuid.UUID](

@@ -1,13 +1,13 @@
-from typing import Annotated, TYPE_CHECKING
 import uuid
+from typing import TYPE_CHECKING, Annotated
 
 from fastapi import Depends, HTTPException
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from src.core.logger import get_logger
-from src.infrastructure.security.jwt import JWTHandler
-from src.infrastructure.database.models import Users
 from src.infrastructure.database.enums.roles import Roles
+from src.infrastructure.database.models import Users
+from src.infrastructure.security.jwt import JWTHandler
 from src.presentation.api.v1.users.dependencies import USER_SERVICE_DEP
 
 if TYPE_CHECKING:

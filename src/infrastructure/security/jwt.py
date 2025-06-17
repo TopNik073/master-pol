@@ -1,9 +1,9 @@
-from typing import Literal
 import uuid
+from datetime import UTC, datetime, timedelta
+from typing import Literal
 
 from fastapi import HTTPException
 from jose import jwt
-from datetime import datetime, timedelta, UTC
 
 from src.core.config import config
 

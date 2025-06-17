@@ -1,12 +1,11 @@
+import uuid
 from typing import TYPE_CHECKING
-from src.infrastructure.database.models.base_model import BaseModel
+
+from sqlalchemy.dialects.postgresql import BIGINT, UUID
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.infrastructure.database.enums.partner_statuses import PartnerStatuses
-
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import UUID, BIGINT
-
-import uuid
+from src.infrastructure.database.models.base_model import BaseModel
 
 if TYPE_CHECKING:
     from src.infrastructure.database.models.products import Products
@@ -37,6 +36,5 @@ class Partners(BaseModel):
     rate: Mapped[float] = mapped_column(nullable=False)
 
     products: Mapped[list["Products"]] = relationship(
-        back_populates="partner",
-        cascade="save-update, merge"
+        back_populates="partner", cascade="save-update, merge"
     )

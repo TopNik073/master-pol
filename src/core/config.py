@@ -1,7 +1,7 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import PostgresDsn, SecretStr, EmailStr, Field
-
 from pathlib import Path
+
+from pydantic import EmailStr, Field, PostgresDsn, SecretStr
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Config(BaseSettings):

@@ -1,10 +1,10 @@
-from typing import TYPE_CHECKING
-from src.infrastructure.database.models.base_model import BaseModel
-
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import UUID
-
 import uuid
+from typing import TYPE_CHECKING
+
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from src.infrastructure.database.models.base_model import BaseModel
 
 if TYPE_CHECKING:
     from src.infrastructure.database.models.products_import import ProductsImport
@@ -27,5 +27,5 @@ class ProductsTypes(BaseModel):
     import_products: Mapped[list["ProductsImport"]] = relationship(
         back_populates="product_type",
         cascade="all, delete-orphan",
-        passive_deletes=True
+        passive_deletes=True,
     )

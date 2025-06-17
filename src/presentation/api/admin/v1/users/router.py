@@ -3,17 +3,16 @@ import uuid
 from fastapi import APIRouter
 
 from src.presentation.api.admin.v1.users.dependencies import ADMIN_USER_SERVICE_DEP
-from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
-from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
-
-from src.presentation.api.v1.schemas import (
-    SuccessResponseSchema,
-    PaginationMetadata,
-    UserBase,
-)
 from src.presentation.api.admin.v1.users.schemas import (
-    AdminUsersPaginatedResponseSchema,
     AdminUsersControlRequestSchema,
+    AdminUsersPaginatedResponseSchema,
+)
+from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
+from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
+from src.presentation.api.v1.schemas import (
+    PaginationMetadata,
+    SuccessResponseSchema,
+    UserBase,
 )
 
 admin_users = APIRouter(prefix="/users", tags=["Users Admin"])

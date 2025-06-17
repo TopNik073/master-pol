@@ -1,14 +1,12 @@
 from fastapi import HTTPException
 
-from src.presentation.api.admin.v1.users.schemas import AdminUsersControlRequestSchema
-from src.infrastructure.database.repositories import UsersRepo
-from src.presentation.api.admin.v1.users.service import AdminUsersService
-
-from src.infrastructure.database.enums.roles import Roles
-from src.infrastructure.database.connection import AsyncSessionMaker
-
 from src.core.config import config
 from src.core.logger import get_logger
+from src.infrastructure.database.connection import AsyncSessionMaker
+from src.infrastructure.database.enums.roles import Roles
+from src.infrastructure.database.repositories import UsersRepo
+from src.presentation.api.admin.v1.users.schemas import AdminUsersControlRequestSchema
+from src.presentation.api.admin.v1.users.service import AdminUsersService
 
 logger = get_logger(__name__)
 

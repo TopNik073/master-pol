@@ -1,19 +1,19 @@
 import uuid
+
 import bcrypt
 from fastapi import HTTPException
 
-from src.infrastructure.database.repositories import UsersRepo
-from src.infrastructure.database.models import Users
 from src.infrastructure.database.enums.roles import Roles
+from src.infrastructure.database.models import Users
+from src.infrastructure.database.repositories import UsersRepo
 from src.infrastructure.security.jwt import JWTHandler
-
 from src.presentation.api.v1.auth.schemas import (
-    RegisterRequestSchema,
-    LoginRequestSchema,
     AuthResponseSchema,
-    TokensPairSchema,
-    TokenSchema,
+    LoginRequestSchema,
     RefreshTokenRequest,
+    RegisterRequestSchema,
+    TokenSchema,
+    TokensPairSchema,
     UserBase,
 )
 

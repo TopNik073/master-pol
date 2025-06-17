@@ -1,7 +1,7 @@
-from src.infrastructure.database.repositories.base_repo import PostgresRepo
-from src.infrastructure.database.models import ProductsTypes
-
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.infrastructure.database.models import ProductsTypes
+from src.infrastructure.database.repositories.base_repo import PostgresRepo
 
 
 class ProductsTypesRepo(PostgresRepo):

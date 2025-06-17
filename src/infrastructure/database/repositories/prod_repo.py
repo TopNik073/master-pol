@@ -1,12 +1,16 @@
 from typing import Literal
 
-from src.infrastructure.database.repositories.base_repo import PostgresRepo
-from src.infrastructure.database.models import Products, Partners, ProductsImport, ProductsTypes
-
-from sqlalchemy.orm import selectinload, joinedload
-from sqlalchemy import select, func, or_, desc, asc, String, Text
-
+from sqlalchemy import String, Text, asc, desc, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload, selectinload
+
+from src.infrastructure.database.models import (
+    Partners,
+    Products,
+    ProductsImport,
+    ProductsTypes,
+)
+from src.infrastructure.database.repositories.base_repo import PostgresRepo
 
 
 class ProductsRepo(PostgresRepo):
@@ -14,17 +18,19 @@ class ProductsRepo(PostgresRepo):
         super().__init__(model=Products, session=session)
 
     async def get_paginated(
-            self,
-            page: int,
-            per_page: int,
-            search_query: str | None = None,
-            order_by: str | None = None,
-            order_direction: str = "asc",
-            include: list[str] | None = None,
+        self,
+        page: int,
+        per_page: int,
+        search_query: str | None = None,
+        order_by: str | None = None,
+        order_direction: str = "asc",
+        include: list[str] | None = None,
     ) -> tuple[list[Products], int]:
         stmt = select(self.model).options(
             selectinload(Products.partner),
-            selectinload(Products.product_import).selectinload(ProductsImport.product_type),
+            selectinload(Products.product_import).selectinload(
+                ProductsImport.product_type
+            ),
         )
 
         subq = select(self.model.id)
@@ -36,12 +42,18 @@ class ProductsRepo(PostgresRepo):
                     search_conditions.append(column.ilike(f"%{search_query}%"))
 
             if search_query:
-                subq = subq.join(Products.partner).join(Products.product_import).join(ProductsImport.product_type)
-                search_conditions.extend([
-                    Partners.name.ilike(f"%{search_query}%"),
-                    ProductsImport.name.ilike(f"%{search_query}%"),
-                    ProductsTypes.name.ilike(f"%{search_query}%")
-                ])
+                subq = (
+                    subq.join(Products.partner)
+                    .join(Products.product_import)
+                    .join(ProductsImport.product_type)
+                )
+                search_conditions.extend(
+                    [
+                        Partners.name.ilike(f"%{search_query}%"),
+                        ProductsImport.name.ilike(f"%{search_query}%"),
+                        ProductsTypes.name.ilike(f"%{search_query}%"),
+                    ]
+                )
                 subq = subq.where(or_(*search_conditions))
 
         stmt = stmt.where(self.model.id.in_(subq))

@@ -1,11 +1,9 @@
 from fastapi import APIRouter
 
-from src.presentation.api.v1.users.dependencies import USER_SERVICE_DEP
 from src.presentation.api.v1.guards.jwt import CURRENT_USER_DEP
-
 from src.presentation.api.v1.schemas import SuccessResponseSchema, UserBase
+from src.presentation.api.v1.users.dependencies import USER_SERVICE_DEP
 from src.presentation.api.v1.users.schemas import UserControlRequestSchema
-
 
 users = APIRouter(prefix="/users", tags=["Users"])
 
@@ -25,5 +23,6 @@ async def update_me(
 ) -> SuccessResponseSchema[UserBase]:
     user = await service.update(current_user.id, data)
     return SuccessResponseSchema[UserBase](
-        data=UserBase(**user.dump_to_dict()), message="User profile updated successfully"
+        data=UserBase(**user.dump_to_dict()),
+        message="User profile updated successfully",
     )

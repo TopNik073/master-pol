@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from src.presentation.api.v1.schemas import ProductsTypesBase, PaginationMetadata
+from src.presentation.api.v1.schemas import PaginationMetadata, ProductsTypesBase
 
 
 class AdminProductsTypesPaginatedResponseSchema(BaseModel):

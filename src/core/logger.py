@@ -1,9 +1,9 @@
-from typing import Any
 import json
 import logging
-import structlog
-
 from logging.handlers import RotatingFileHandler
+from typing import Any
+
+import structlog
 
 from src.core.config import config
 

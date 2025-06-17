@@ -5,18 +5,17 @@ from fastapi import APIRouter
 from src.presentation.api.admin.v1.products_import.dependencies import (
     ADMIN_PRODUCTS_IMPORT_SERVICE_DEP,
 )
-from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
+from src.presentation.api.admin.v1.products_import.schemas import (
+    AdminProductsImportControlRequestSchema,
+    AdminProductsImportPaginatedResponseSchema,
+)
 from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
-
+from src.presentation.api.v1.guards.jwt import CURRENT_ADMIN_USER_DEP
 from src.presentation.api.v1.schemas import (
-    SuccessResponseSchema,
+    PaginationMetadata,
     ProductsImportBase,
     ProductsTypesBase,
-    PaginationMetadata,
-)
-from src.presentation.api.admin.v1.products_import.schemas import (
-    AdminProductsImportPaginatedResponseSchema,
-    AdminProductsImportControlRequestSchema,
+    SuccessResponseSchema,
 )
 
 admin_products_import = APIRouter(prefix="/products-import", tags=["Products Import"])
@@ -38,11 +37,15 @@ async def get_products_import(
                     name=product_import.name,
                     article=product_import.article,
                     minimum_cost=product_import.minimum_cost,
-                    product_type=ProductsTypesBase(
-                        id=product_import.product_type.id,
-                        name=product_import.product_type.name,
-                        coefficient=product_import.product_type.coefficient,
-                    ) if product_import.product_type else None,
+                    product_type=(
+                        ProductsTypesBase(
+                            id=product_import.product_type.id,
+                            name=product_import.product_type.name,
+                            coefficient=product_import.product_type.coefficient,
+                        )
+                        if product_import.product_type
+                        else None
+                    ),
                 )
                 for product_import in products_import
             ],
@@ -68,11 +71,15 @@ async def get_products_import_by_id(
             name=product_import.name,
             article=product_import.article,
             minimum_cost=product_import.minimum_cost,
-            product_type=ProductsTypesBase(
-                id=product_import.product_type.id,
-                name=product_import.product_type.name,
-                coefficient=product_import.product_type.coefficient,
-            ) if product_import.product_type else None,
+            product_type=(
+                ProductsTypesBase(
+                    id=product_import.product_type.id,
+                    name=product_import.product_type.name,
+                    coefficient=product_import.product_type.coefficient,
+                )
+                if product_import.product_type
+                else None
+            ),
         ),
         message="Product Import fetched by id successfully",
     )
@@ -92,11 +99,15 @@ async def create_product_import(
             name=product_import.name,
             article=product_import.article,
             minimum_cost=product_import.minimum_cost,
-            product_type=ProductsTypesBase(
-                id=product_import.product_type.id,
-                name=product_import.product_type.name,
-                coefficient=product_import.product_type.coefficient,
-            ) if product_import.product_type else None,
+            product_type=(
+                ProductsTypesBase(
+                    id=product_import.product_type.id,
+                    name=product_import.product_type.name,
+                    coefficient=product_import.product_type.coefficient,
+                )
+                if product_import.product_type
+                else None
+            ),
         ),
         message="Product Import created successfully",
     )
@@ -117,11 +128,15 @@ async def update_product_import(
             name=product_import.name,
             article=product_import.article,
             minimum_cost=product_import.minimum_cost,
-            product_type=ProductsTypesBase(
-                id=product_import.product_type.id,
-                name=product_import.product_type.name,
-                coefficient=product_import.product_type.coefficient,
-            ) if product_import.product_type else None,
+            product_type=(
+                ProductsTypesBase(
+                    id=product_import.product_type.id,
+                    name=product_import.product_type.name,
+                    coefficient=product_import.product_type.coefficient,
+                )
+                if product_import.product_type
+                else None
+            ),
         ),
         message="Product Import updated successfully",
     )

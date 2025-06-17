@@ -1,8 +1,8 @@
 from typing import Annotated
+
 from fastapi import Depends
 
 from src.infrastructure.database.connection import DB_DEP
-
 from src.infrastructure.database.repositories import PartnersRepo
 from src.presentation.api.admin.v1.partners.service import AdminPartnersService
 

@@ -1,4 +1,5 @@
 import uuid
+
 from pydantic import BaseModel
 
 from src.presentation.api.v1.schemas import PaginationMetadata, ProductsImportBase
