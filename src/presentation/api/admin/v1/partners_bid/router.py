@@ -7,8 +7,8 @@ from src.presentation.api.admin.v1.partners_bid.dependencies import (
 )
 from src.presentation.api.admin.v1.partners_bid.schemas import (
     AdminPartnerBidPaginatedResponseSchema,
-    AdminPartnersBidControlRequestSchema,
-    PartnerBidBase,
+    PartnersBidCreateRequestSchema,
+    AdminPartnersBidUpdateRequestSchema,
     PartnerBidExtendedSchema,
 )
 from src.presentation.api.v1.dependencies import PAGINATED_REQUEST_DEP
@@ -20,12 +20,10 @@ admin_partners_bid = APIRouter(prefix="/partners-bid", tags=["Partners (Bid)"])
 
 @admin_partners_bid.post("/")
 async def get_bid_request(
-    service: ADMIN_PARTNERS_BID_SERVICE_DEP, data: PartnerBidBase
+    service: ADMIN_PARTNERS_BID_SERVICE_DEP, data: PartnersBidCreateRequestSchema
 ) -> SuccessResponseSchema[uuid.UUID]:
     partner = await service.create(data)
-    return SuccessResponseSchema[uuid.UUID](
-        data=partner.id, message="Bid created successfully"
-    )
+    return SuccessResponseSchema[uuid.UUID](data=partner.id, message="Bid created successfully")
 
 
 @admin_partners_bid.get("/")
@@ -66,7 +64,7 @@ async def get_partner_bid(
 async def update_partner_bid(
     service: ADMIN_PARTNERS_BID_SERVICE_DEP,
     _current_user: CURRENT_ADMIN_USER_DEP,
-    data: AdminPartnersBidControlRequestSchema,
+    data: AdminPartnersBidUpdateRequestSchema,
     id: uuid.UUID,
 ) -> SuccessResponseSchema[PartnerBidExtendedSchema]:
     partner_bid = await service.update(id, data)

@@ -1,5 +1,3 @@
-import uuid
-
 from pydantic import BaseModel, EmailStr
 
 from src.infrastructure.database.enums.partner_statuses import PartnerStatuses
@@ -16,7 +14,17 @@ class AdminPartnerBidPaginatedResponseSchema(BaseModel):
     meta: PaginationMetadata
 
 
-class AdminPartnersBidControlRequestSchema(BaseModel):
+class PartnersBidCreateRequestSchema(BaseModel):
+    partner_type: str
+    name: str
+    email: EmailStr
+    ur_address: str
+    director: str
+    phone_number: str
+    inn: int
+
+
+class AdminPartnersBidUpdateRequestSchema(BaseModel):
     partner_type: str
     name: str
     email: EmailStr
