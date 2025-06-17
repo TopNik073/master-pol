@@ -8,21 +8,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const addEntityBtnId = 'addEntityBtn';
 
     const productsColumnDefinitions = [
-        {label: 'Продукт', field: 'product_import.name', sortable: true, render: (product) => product.product_import.name},
+        {label: 'Продукт', field: 'product_import.name', sortable: true, render: (product) => product.product_import?.name || "-"},
         {label: 'Кол-во проданной продукции', sortable: true, field: 'quantity_products', render: (product) => product.quantity_products},
         {label: 'Партнёр', field: 'partner.name', sortable: true, render: (product) => product.partner?.name || '-'},
-        {label: 'Тип продукта', field: 'product_type.name', sortable: true, render: (product) => product.product_import.product_type?.name || '-'},
+        {label: 'Тип продукта', field: 'product_type.name', sortable: true, render: (product) => product.product_import?.product_type?.name || '-'},
         {label: 'Дата продажи', field: 'sell_date', sortable: true, render: (product) => new Date(product.sell_date).toISOString().split('T')[0]},
     ];
 
-    // Создаем экземпляры EntitySelectField для связанных сущностей
     const partnerSelectField = new EntitySelectField({
         id: 'partner_select',
         name: 'partner_id',
         label: 'Партнёр',
         apiEndpoint: '/partners',
         formatItem: (partner) => partner.name,
-        required: true,
+        required: false,
         placeholder: 'Выберите партнёра...'
     });
 
@@ -32,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         label: 'Продукт',
         apiEndpoint: '/products-import',
         formatItem: (product_import) => product_import.name,
-        required: true,
+        required: false,
         placeholder: 'Выберите продукт...'
     });
 

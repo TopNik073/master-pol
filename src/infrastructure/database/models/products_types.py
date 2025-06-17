@@ -25,5 +25,7 @@ class ProductsTypes(BaseModel):
     coefficient: Mapped[float] = mapped_column(nullable=False)
 
     import_products: Mapped[list["ProductsImport"]] = relationship(
-        back_populates="product_type"
+        back_populates="product_type",
+        cascade="all, delete-orphan",
+        passive_deletes=True
     )

@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addEntityBtnId = 'addEntityBtn';
 
     const productsColumnDefinitions = [
-        {label: 'Тип', field: 'product_type.name', sortable: true, render: (productImport) => productImport.product_type.name},
+        {label: 'Тип', field: 'product_type.name', sortable: true, render: (productImport) => productImport.product_type?.name || '-'},
         {label: 'Название', field: 'name', sortable: true, render: (productImport) => productImport.name},
         {label: 'Артикул', field: 'article', sortable: true, render: (productImport) => productImport.article},
         {label: 'Минимальная стоимость', field: 'product_type.name', sortable: true, render: (productImport) => productImport.minimum_cost},
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         label: 'Тип',
         apiEndpoint: '/products-types',
         formatItem: (product_type) => product_type.name,
-        required: true,
+        required: false,
         placeholder: 'Выберите тип...'
     });
 

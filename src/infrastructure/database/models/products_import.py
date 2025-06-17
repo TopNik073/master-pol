@@ -24,13 +24,18 @@ class ProductsImport(BaseModel):
     )
 
     type_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("products_types.id"), nullable=False
+        ForeignKey("products_types.id"), nullable=True
     )
     name: Mapped[str] = mapped_column(nullable=False)
     article: Mapped[str] = mapped_column(nullable=False)
     minimum_cost: Mapped[float] = mapped_column(nullable=False)
 
     product_type: Mapped["ProductsTypes"] = relationship(
-        back_populates="import_products"
+        back_populates="import_products",
+        passive_deletes=True
     )
-    products: Mapped[list["Products"]] = relationship(back_populates="product_import")
+    products: Mapped[list["Products"]] = relationship(
+        back_populates="product_import",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )

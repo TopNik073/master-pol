@@ -54,7 +54,7 @@ async def get_partners(
                             id=prod.id,
                             quantity_products=prod.quantity_products,
                             sell_date=prod.sell_date,
-                            partner=PartnerBase(**partner.dump_to_dict()),
+                            partner=PartnerBase(**partner.dump_to_dict()) if prod.partner else None,
                             product_import=ProductsImportBase(
                                 id=prod.product_import.id,
                                 type_id=prod.product_import.type_id,
@@ -65,8 +65,8 @@ async def get_partners(
                                     id=prod.product_import.product_type.id,
                                     name=prod.product_import.product_type.name,
                                     coefficient=prod.product_import.product_type.coefficient,
-                                ),
-                            ),
+                                ) if prod.product_import.product_type else None,
+                            ) if prod.product_import else None,
                         )
                         for prod in partner.products
                     ],

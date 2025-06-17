@@ -70,6 +70,7 @@ class TableComponent {
     }
 
     renderRows(items) {
+    console.log(items)
         const tableBody = document.getElementById('tableBody');
         if (!tableBody) return;
 

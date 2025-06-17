@@ -34,7 +34,7 @@ async def get_products_import(
             items=[
                 ProductsImportBase(
                     id=product_import.id,
-                    type_id=product_import.type_id,
+                    type_id=product_import.type_id if product_import.type_id else None,
                     name=product_import.name,
                     article=product_import.article,
                     minimum_cost=product_import.minimum_cost,
@@ -42,7 +42,7 @@ async def get_products_import(
                         id=product_import.product_type.id,
                         name=product_import.product_type.name,
                         coefficient=product_import.product_type.coefficient,
-                    ),
+                    ) if product_import.product_type else None,
                 )
                 for product_import in products_import
             ],
@@ -64,7 +64,7 @@ async def get_products_import_by_id(
     return SuccessResponseSchema[ProductsImportBase](
         data=ProductsImportBase(
             id=product_import.id,
-            type_id=product_import.type_id,
+            type_id=product_import.type_id if product_import.product_type else None,
             name=product_import.name,
             article=product_import.article,
             minimum_cost=product_import.minimum_cost,
@@ -72,7 +72,7 @@ async def get_products_import_by_id(
                 id=product_import.product_type.id,
                 name=product_import.product_type.name,
                 coefficient=product_import.product_type.coefficient,
-            ),
+            ) if product_import.product_type else None,
         ),
         message="Product Import fetched by id successfully",
     )
@@ -88,7 +88,7 @@ async def create_product_import(
     return SuccessResponseSchema[ProductsImportBase](
         data=ProductsImportBase(
             id=product_import.id,
-            type_id=product_import.type_id,
+            type_id=product_import.type_id if product_import.type_id else None,
             name=product_import.name,
             article=product_import.article,
             minimum_cost=product_import.minimum_cost,
@@ -96,7 +96,7 @@ async def create_product_import(
                 id=product_import.product_type.id,
                 name=product_import.product_type.name,
                 coefficient=product_import.product_type.coefficient,
-            ),
+            ) if product_import.product_type else None,
         ),
         message="Product Import created successfully",
     )
@@ -113,7 +113,7 @@ async def update_product_import(
     return SuccessResponseSchema[ProductsImportBase](
         data=ProductsImportBase(
             id=product_import.id,
-            type_id=product_import.type_id,
+            type_id=product_import.type_id if product_import.type_id else None,
             name=product_import.name,
             article=product_import.article,
             minimum_cost=product_import.minimum_cost,
@@ -121,7 +121,7 @@ async def update_product_import(
                 id=product_import.product_type.id,
                 name=product_import.product_type.name,
                 coefficient=product_import.product_type.coefficient,
-            ),
+            ) if product_import.product_type else None,
         ),
         message="Product Import updated successfully",
     )

@@ -196,7 +196,9 @@ class EntitySelectField {
     }
 
     getValue() {
-        return this.hiddenInput.value;
+        const value = this.hiddenInput.value;
+        if (value === "") return null;
+        return value
     }
 
     setValue(value) {

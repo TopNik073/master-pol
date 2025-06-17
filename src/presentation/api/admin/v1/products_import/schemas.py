@@ -10,7 +10,7 @@ class AdminProductsImportPaginatedResponseSchema(BaseModel):
 
 
 class AdminProductsImportControlRequestSchema(BaseModel):
-    type_id: uuid.UUID
+    type_id: uuid.UUID | None
     name: str
     article: str
     minimum_cost: float

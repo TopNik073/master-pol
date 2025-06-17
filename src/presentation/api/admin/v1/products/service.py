@@ -20,7 +20,6 @@ class AdminProductsService(BaseAdminService):
             search_query,
             order_by,
             order_direction,
-            ["partner", "product_import", "product_import.product_type"],
         )
 
     async def get(self, id: uuid.UUID) -> Products:

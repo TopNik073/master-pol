@@ -62,11 +62,11 @@ class ProductsTypesBase(BaseModel):
 
 class ProductsImportBase(BaseModel):
     id: uuid.UUID
-    type_id: uuid.UUID
+    type_id: uuid.UUID | None
     name: str
     article: str
     minimum_cost: float
-    product_type: ProductsTypesBase
+    product_type: ProductsTypesBase | None
 
 
 class ProductsBase(BaseModel):
@@ -76,8 +76,8 @@ class ProductsBase(BaseModel):
 
 
 class ProductsExtendedSchema(ProductsBase):
-    partner: PartnerBase
-    product_import: ProductsImportBase
+    partner: PartnerBase | None
+    product_import: ProductsImportBase | None
 
 
 class PartnersProductsExtendedSchema(PartnerBase):

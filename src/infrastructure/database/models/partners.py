@@ -36,4 +36,7 @@ class Partners(BaseModel):
     inn: Mapped[int] = mapped_column(BIGINT, nullable=False)
     rate: Mapped[float] = mapped_column(nullable=False)
 
-    products: Mapped[list["Products"]] = relationship(back_populates="partner")
+    products: Mapped[list["Products"]] = relationship(
+        back_populates="partner",
+        cascade="save-update, merge"
+    )

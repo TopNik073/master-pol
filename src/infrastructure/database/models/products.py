@@ -25,13 +25,20 @@ class Products(BaseModel):
     )
 
     partner_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("partners.id"), nullable=False
+        ForeignKey("partners.id", ondelete="SET NULL"),
+        nullable=True
     )
     product_import_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("products_import.id"), nullable=False
+        ForeignKey("products_import.id", ondelete="SET NULL"), nullable=True
     )
     quantity_products: Mapped[int] = mapped_column(nullable=False)
     sell_date: Mapped[datetime.datetime] = mapped_column(nullable=False)
 
-    partner: Mapped["Partners"] = relationship(back_populates="products")
-    product_import: Mapped["ProductsImport"] = relationship(back_populates="products")
+    partner: Mapped["Partners"] = relationship(
+        back_populates="products",
+        passive_deletes=True
+    )
+    product_import: Mapped["ProductsImport"] = relationship(
+        back_populates="products",
+        passive_deletes=True
+    )

@@ -32,6 +32,7 @@ async def get_products(
     pagination: PAGINATED_REQUEST_DEP,
 ) -> SuccessResponseSchema[AdminProductsPaginatedResponseSchema]:
     products, total = await service.get_paginated(**pagination.dump_to_dict())
+    print("Products", products)
     return SuccessResponseSchema[AdminProductsPaginatedResponseSchema](
         data=AdminProductsPaginatedResponseSchema(
             items=[
@@ -39,7 +40,7 @@ async def get_products(
                     id=product.id,
                     quantity_products=product.quantity_products,
                     sell_date=product.sell_date,
-                    partner=PartnerBase(**product.partner.dump_to_dict()),
+                    partner=PartnerBase(**product.partner.dump_to_dict()) if product.partner else None,
                     product_import=ProductsImportBase(
                         id=product.product_import.id,
                         type_id=product.product_import.type_id,
@@ -50,8 +51,8 @@ async def get_products(
                             id=product.product_import.product_type.id,
                             name=product.product_import.product_type.name,
                             coefficient=product.product_import.product_type.coefficient,
-                        ),
-                    ),
+                        ) if product.product_import.product_type else None,
+                    ) if product.product_import else None,
                 )
                 for product in products
             ],
@@ -75,7 +76,7 @@ async def get_product(
             id=product.id,
             quantity_products=product.quantity_products,
             sell_date=product.sell_date,
-            partner=PartnerBase(**product.partner.dump_to_dict()),
+            partner=PartnerBase(**product.partner.dump_to_dict()) if product.partner else None,
             product_import=ProductsImportBase(
                 id=product.product_import.id,
                 type_id=product.product_import.type_id,
@@ -86,8 +87,8 @@ async def get_product(
                     id=product.product_import.product_type.id,
                     name=product.product_import.product_type.name,
                     coefficient=product.product_import.product_type.coefficient,
-                ),
-            ),
+                ) if product.product_import.product_type else None,
+            ) if product.product_import else None,
         ),
         message="Product fetched successfully",
     )
