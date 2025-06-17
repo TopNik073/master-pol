@@ -32,7 +32,6 @@ async def get_products(
     pagination: PAGINATED_REQUEST_DEP,
 ) -> SuccessResponseSchema[AdminProductsPaginatedResponseSchema]:
     products, total = await service.get_paginated(**pagination.dump_to_dict())
-    print("Products", products)
     return SuccessResponseSchema[AdminProductsPaginatedResponseSchema](
         data=AdminProductsPaginatedResponseSchema(
             items=[
