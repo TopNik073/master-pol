@@ -80,7 +80,7 @@ async def delete_partner_bid(
     _current_user: CURRENT_ADMIN_USER_DEP,
     id: uuid.UUID,
 ) -> SuccessResponseSchema[uuid.UUID]:
-    partner_bid_id = service.delete(id)
+    partner_bid_id = await service.delete(id)
     return SuccessResponseSchema[uuid.UUID](
         data=partner_bid_id, message="Partner (bid) successfully deleted"
     )

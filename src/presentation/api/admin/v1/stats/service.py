@@ -28,7 +28,7 @@ class AdminStatsService:
         metrics AS (
             SELECT 
                 (SELECT COUNT(*) FROM users) as total_users,
-                (SELECT COUNT(*) FROM partners) as total_partners,
+                (SELECT COUNT(*) FROM partners WHERE status = 'active') as total_partners,
                 (SELECT COUNT(*) FROM products_types) as product_types_count
         ),
         
