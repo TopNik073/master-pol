@@ -3,7 +3,7 @@ version: '3.8'
 services:
   app:
      build: .
-     container_name: app-kd-container
+     container_name: app-masterpol-container
      restart: unless-stopped
      environment:
        - DB_HOST=db
@@ -25,7 +25,7 @@ services:
 
   db:
     image: postgres:17.5
-    container_name: db-kd-container
+    container_name: db-masterpol-container
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "${DB_USER}", "-d", "${DB_NAME}"]
@@ -43,9 +43,29 @@ services:
     networks:
       - app_network
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-masterpol-container
+    restart: unless-stopped
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${ADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${ADMIN_PASSWORD}
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+    ports:
+      - "5050:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - app_network
+
 volumes:
   postgres_data:
   app_logs:
+  pgadmin_data:
 
 networks:
   app_network:
